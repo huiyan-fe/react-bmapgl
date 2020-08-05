@@ -1,0 +1,52 @@
+{
+  "name": "react-bmapgl",
+  "version": "1.0.0",
+  "description": "基于百度地图JavaScript GL版API封装的React组件库",
+  "main": "index.js",
+  "scripts": {
+    "start": "styleguidist server",
+    "build:doc": "styleguidist build",
+    "build": "tsc --build tsconfig.build.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huiyan-fe/react-bmapgl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huiyan-fe/react-bmapgl/issues"
+  },
+  "homepage": "https://github.com/huiyan-fe/react-bmapgl#readme",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "shallowequal": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/bmapgl": "0.0.0",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "@types/shallowequal": "^1.1.1",
+    "babel-loader": "^8.1.0",
+    "cz-conventional-changelog": "^3.2.0",
+    "react-docgen-typescript": "^1.20.1",
+    "react-styleguidist": "^11.0.8",
+    "tern": "^0.24.3",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
