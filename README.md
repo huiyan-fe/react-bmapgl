@@ -1,4 +1,8 @@
 # React-BMapGL
+[![npm version](https://img.shields.io/npm/v/react-bmapgl.svg)](https://www.npmjs.com/package/react-bmapgl)
+[![Package Quality](http://npm.packagequality.com/shield/react-bmapgl.svg)](http://packagequality.com/#?package=react-bmapgl)
+[![Download](https://img.shields.io/npm/dm/react-bmapgl.svg)](https://www.npmjs.com/package/react-bmapgl)
+[![License](https://img.shields.io/github/license/huiyan-fe/react-bmapgl.svg)](https://github.com/huiyan-fe/react-bmapgl)
 
 基于百度地图JavaScript GL版API封装的React组件库。如果想要使用旧版的2D地图的话，使用[react-bmap](https://github.com/huiyan-fe/react-bmap)。如果您对使用地图API完全陌生，建议使用这个库之前先了解[百度地图JavaScript GL Api](http://lbsyun.baidu.com/index.php?title=jspopularGL)，了解一些地图的基本概念，并申请开发者`ak`。
 
