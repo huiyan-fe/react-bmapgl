@@ -15,8 +15,19 @@ module.exports = {
       sectionDepth: 1,
     },
     {
-      name: 'Test',
-      components: ['src/Test.tsx'],
+      name: '控件',
+      components: 'src/Control/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
+    {
+      name: '覆盖物',
+      components: 'src/Overlay/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
+    {
+      name: '地图图层',
+      components: 'src/Layer/[A-Z]*.tsx',
+      sectionDepth: 0,
     },
   ],
   // 每一节一页, 避免加载多个地图实例
@@ -63,6 +74,10 @@ module.exports = {
   styles: styles,
   exampleMode: 'expand',
   usageMode: 'expand',
+  // styleguideComponents: {
+  //   LogoRenderer: path.join(__dirname, 'rsg-components/Logo'),
+  //   ReactComponentRenderer: path.join(__dirname, 'rsg-components/ReactComponent'),
+  // },
   // require: [path.resolve(__dirname, 'docs/helpers/setup.tsx')],
   // Typescript支持
   resolver: require('react-docgen').resolver.findAllComponentDefinitions,
@@ -70,10 +85,7 @@ module.exports = {
   webpackConfig: {
     resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.
-      extensions: ['.ts', '.tsx', '.js', 'jsx'],
-      alias: {
-        '@': path.resolve('src')
-      }
+      extensions: ['.ts', '.tsx', '.js', 'jsx']
     },
     module: {
       rules: [

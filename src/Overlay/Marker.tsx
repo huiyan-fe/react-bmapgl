@@ -207,5 +207,6 @@ Marker.defaultProps = {
 
 /**
  * 在地图上绘制简单的标注点
+ * @visibleName Marker 点标注
  */
 export default Wrapper(Marker, eventsMap, methodsMap);

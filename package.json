@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "styleguidist server",
-    "build": "rm -rf dist && tsc --build tsconfig.json",
+    "build": "rm -rf dist && tsc --build tsconfig.build.json",
     "build:doc": "styleguidist build",
     "deploy": "gh-pages -d styleguide",
     "page": "npm run build:doc && npm run deploy",
