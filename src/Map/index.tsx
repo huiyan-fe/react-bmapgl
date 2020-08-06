@@ -1,6 +1,12 @@
+/**
+ * @file 地图核心组件
+ * @author hedongran
+ * @email hdr01@126.com
+ */
+
 import React, { ReactNode, ReactElement, CSSProperties } from 'react';
 import { Component } from '../common';
-import { default as Wrapper, Events, Options, Methods } from '@/common/WrapperHOC';
+import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowequal from 'shallowequal';
 
 export interface MapProps {
@@ -98,8 +104,8 @@ class Map extends Component<MapProps, {}> {
         let {center: preCenter, zoom: preZoom} = prevProps;
         let {center, zoom} = this.props;
 
-        let isCenterChanged: boolean = center && shallowequal(preCenter, center);
-        let isZoomChanged: boolean = !!(zoom && shallowequal(preZoom, zoom));
+        let isCenterChanged: boolean = center && !shallowequal(preCenter, center);
+        let isZoomChanged: boolean = !!(zoom && !shallowequal(preZoom, zoom));
         let centerPoint = new BMapGL.Point(center.lng, center.lat);
 
         if (isCenterChanged && isZoomChanged) {

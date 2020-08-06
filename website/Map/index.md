@@ -1,24 +1,37 @@
 ## Demo
 
+### 基础地图
 ```jsx
-import mapstyle from '../mapstyle.json';
-
 class Example extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Map
         style={{ height: 450 }}
-        zoom={12}
         center={new BMapGL.Point(116.404449, 39.914889)}
-        mapStyleV2={{styleJson: mapstyle}}
+        zoom={12}
         heading={0}
         tilt={40}
         onClick={e => console.log(e)}
         enableScrollWheelZoom
+      />
+    )
+  }
+}
+
+<Example />
+```
+
+### 个性化地图
+```jsx
+import mapstyle from '../mapstyle.json';
+
+class Example extends React.Component {
+  render() {
+    return (
+      <Map
+        center={new BMapGL.Point(116.404449, 39.914889)}
+        zoom={12}
+        mapStyleV2={{styleJson: mapstyle}}
       />
     )
   }

@@ -24,10 +24,10 @@ npm install react-bmapgl --save
 ```
 
 ## Hello World
-```javascript
+```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
+import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 
 class App extends React.Component {
     render() {
@@ -44,8 +44,16 @@ ReactDOM.render(<App />, document.getElementById('container'));
 
 ## 获取`map`实例
 如果你在业务中需要操作`map`对象，需要`BMapGL.Map`实例的话，可以通过`<Map>`组件实例的`map`属性访问到它。
-```javascript
+```jsx static
 <Map ref={ref => {this.map = ref.map}} />
+```
+如果你要开发`Map`的子组件，想要在子组件中获得`map`对象，可以直接在`<Map>`包裹的子组件中调用`this.props.map`即可。
+```jsx static
+<Map><MapComponent /></Map>
+
+function MapComponent(props) {
+    console.log(props.map);
+}
 ```
 
 ## Typescript支持
