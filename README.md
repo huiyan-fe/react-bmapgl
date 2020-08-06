@@ -6,7 +6,7 @@ React-BMapGL只是利用了React组件的生命周期，来调用对应的百度
 
 ## 文档示例
 
-待编写示例demo
+https://huiyan-fe.github.io/react-bmapgl/
 
 ## 开始使用
 
