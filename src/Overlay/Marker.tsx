@@ -56,11 +56,14 @@ for (let i = 1; i <= 10; i++) {
     });
 }
 
+type IconString = 'simple_red' | 'simple_blue' | 'loc_red' | 'loc_blue' | 'start' | 'end' | 'location'
+    | 'red1' | 'red2' | 'red3' | 'red4' | 'red5' | 'red6' | 'red7' | 'red8' | 'red9' | 'red10'
+    | 'blue1' | 'blue2' | 'blue3' | 'blue4' | 'blue5' | 'blue6' | 'blue7' | 'blue8' | 'blue9' | 'blue10'
 interface MarkerProps {
     /** 标注点的坐标 */
     position: BMapGL.Point;
     /** 标注的Icon图标 */
-    icon: BMapGL.Icon | string;
+    icon: BMapGL.Icon | IconString;
     /** 地图实例，来自父元素`<Map>`的继承 */
     map: BMapGL.Map;
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
@@ -105,7 +108,6 @@ class Marker extends Component<MarkerProps> {
         'raiseOnDrag',
         'draggingCursor',
         'rotation',
-        'shadow',
         'title'
     ];
 
@@ -119,13 +121,13 @@ class Marker extends Component<MarkerProps> {
 
         let isDataChanged: boolean = position && !shallowequal(position, prePosition);
         let isIconChanged: boolean = !!(icon && !shallowequal(icon, preIcon));
-        let isViewportChanged: boolean = !!(autoViewport && !shallowequal(autoViewport, preViewport));
+        let isViewportChanged: boolean = !shallowequal(autoViewport, preViewport);
         let point = this.parsePosition(position);
 
         if (isDataChanged) {
             this.marker.setPosition(point);
         }
-        if (isDataChanged || isViewportChanged) {
+        if (autoViewport && (isDataChanged || isViewportChanged)) {
             this.props.map.setViewport([point], this.props.viewportOptions || {});
         }
         if (isIconChanged) {
@@ -187,7 +189,7 @@ class Marker extends Component<MarkerProps> {
         return point;
     }
 
-    parseIcon(icon: BMapGL.Icon | string): BMapGL.Icon {
+    parseIcon(icon: BMapGL.Icon | IconString): BMapGL.Icon {
         let renderIcon: BMapGL.Icon;
 
         if (icon && icon instanceof BMapGL.Icon) {
