@@ -3,71 +3,72 @@
  * @author hedongran
  * @email hdr01@126.com
  */
-// @ts-nocheck
-import React from 'react';
-import { render } from 'react-dom';
+
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
+import shallowequal from 'shallowequal';
+import { MercatorProjection } from '../utils';
 
 const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
 
 let icons = {
     'simple_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(-454 / 2, -378 / 2),
-        anchor: new BMapGL.Size(42 / 2 / 2, 66 / 2),
+        imageOffset: new BMapGL.Size(454 / 2, 378 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'simple_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(-454 / 2, -450 / 2),
-        anchor: new BMapGL.Size(42 / 2 / 2, 66 / 2),
+        imageOffset: new BMapGL.Size(454 / 2, 450 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'loc_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
-        imageOffset: new BMapGL.Size(-400 / 2, -378 / 2),
-        anchor: new BMapGL.Size(46 / 2 / 2, 70 / 2),
+        imageOffset: new BMapGL.Size(400 / 2, 378 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'loc_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
-        imageOffset: new BMapGL.Size(-400 / 2, -450 / 2),
-        anchor: new BMapGL.Size(46 / 2 / 2, 70 / 2),
+        imageOffset: new BMapGL.Size(400 / 2, 450 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'start': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
-        imageOffset: new BMapGL.Size(-400 / 2, -278 / 2),
-        anchor: new BMapGL.Size(50 / 2 / 2, 80 / 2),
+        imageOffset: new BMapGL.Size(400 / 2, 278 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'end': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
-        imageOffset: new BMapGL.Size(-450 / 2, -278 / 2),
-        anchor: new BMapGL.Size(50 / 2 / 2, 80 / 2),
+        imageOffset: new BMapGL.Size(450 / 2, 278 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
     'location': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(28 / 2, 40 / 2), {
-        imageOffset: new BMapGL.Size(-248 / 2, -466 / 2),
-        anchor: new BMapGL.Size(28 / 2 / 2, 40 / 2),
+        imageOffset: new BMapGL.Size(248 / 2, 466 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     }),
 }
 
 for (let i = 1; i <= 10; i++) {
     icons['red' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(0 - 42 / 2 * (i - 1), 0),
-        anchor: new BMapGL.Size(42 / 2 / 2, 66 / 2),
+        imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 0),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     });
 }
 
 for (let i = 1; i <= 10; i++) {
     icons['blue' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(0 - 42 / 2 * (i - 1), - 132 / 2),
-        anchor: new BMapGL.Size(42 / 2 / 2, 66 / 2),
+        imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 132 / 2),
         imageSize: new BMapGL.Size(600 / 2, 600 / 2)
     });
 }
 
 interface MarkerProps {
+    /** 标注点的坐标 */
+    position: BMapGL.Point;
+    /** 标注的Icon图标 */
+    icon: BMapGL.Icon | string;
+    /** 地图实例，来自父元素`<Map>`的继承 */
+    map: BMapGL.Map;
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
-    coordType: 'bd09ll' | 'bd09mc'
+    coordType?: 'bd09ll' | 'bd09mc';
+    /** 自动聚焦视野 */
+    autoViewport?: boolean;
+    /** `autoViewport`打开时生效，配置视野的参数 */
+    viewportOptions?: BMapGL.ViewportOptions;
 };
 
 const eventsMap: Events = [
@@ -93,7 +94,7 @@ const methodsMap: Methods = {
 
 class Marker extends Component<MarkerProps> {
 
-    static defaultProps: MarkerProps;
+    static defaultProps: MarkerProps | object;
     marker: BMapGL.Marker;
     options: Options = [
         'offset',
@@ -113,7 +114,24 @@ class Marker extends Component<MarkerProps> {
     }
 
     componentDidUpdate(prevProps: MarkerProps) {
-        this.initialize();
+        let {position, icon, autoViewport} = this.props;
+        let {position: prePosition, icon: preIcon, autoViewport: preViewport} = prevProps;
+
+        let isDataChanged: boolean = position && !shallowequal(position, prePosition);
+        let isIconChanged: boolean = !!(icon && !shallowequal(icon, preIcon));
+        let isViewportChanged: boolean = !!(autoViewport && !shallowequal(autoViewport, preViewport));
+        let point = this.parsePosition(position);
+
+        if (isDataChanged) {
+            this.marker.setPosition(point);
+        }
+        if (isDataChanged || isViewportChanged) {
+            this.props.map.setViewport([point], this.props.viewportOptions || {});
+        }
+        if (isIconChanged) {
+            let renderIcon: BMapGL.Icon = this.parseIcon(icon);
+            this.marker.setIcon(renderIcon);
+        }
     }
 
     componentDidMount() {
@@ -127,6 +145,7 @@ class Marker extends Component<MarkerProps> {
     destroy() {
         if(this.marker){
             this.props.map.removeOverlay(this.marker);
+            // @ts-ignore
             this.marker = null;
         }
     }
@@ -134,62 +153,53 @@ class Marker extends Component<MarkerProps> {
     initialize() {
 
         let map = this.props.map;
-        let type = this.props.type;
-        if (type == 'order_tip' || !map) {
-            return;
-        }
 
         this.destroy();
 
-        let icon;
-        let propsIcon = this.props.icon;
+        let icon = this.parseIcon(this.props.icon);
+        let position = this.parsePosition(this.props.position);
+        let options = this.getOptions();
+        options.icon = icon;
 
-        if (propsIcon && propsIcon instanceof BMapGL.Icon) {
-            icon = propsIcon;
-        } else {
-            if (propsIcon && icons[propsIcon]) {
-                icon = icons[propsIcon];
-            } else {
-                icon = icons.simple_red;
-            }
-        }
-
-        let position;
-        if (this.props.coordType === 'bd09mc') {
-            let projection = map.getMapType().getProjection();
-            position = projection.pointToLngLat(new BMapGL.Pixel(this.props.position.lng, this.props.position.lat));
-        } else {
-            position = new BMapGL.Point(this.props.position.lng, this.props.position.lat);
-        }
-
-        if ('children' in this.props) {
-            this.contentDom = document.createElement('div');
-            const child = this.props.children;
-            render(<div>{child}</div>, this.contentDom)
-            this.marker = new CustomOverlay(position, this.contentDom, {
-                zIndex: this.props.zIndex,
-                pane: this.props.pane,
-                offset: this.props.offset
-            });
-            map.addOverlay(this.marker);
-        } else {
-            let options = this.getOptions(this.options);
-            options.icon = icon;
-            this.marker = new BMapGL.Marker(position, options);
-            if (this.props.isTop) {
-                this.marker.setTop(true);
-            }
-            this.bindEvent(this.marker, this.events);
-
-            map.addOverlay(this.marker);
-            this.bindToggleMeghods(this.marker, this.toggleMethods);
-        }
+        this.instance = this.marker = new BMapGL.Marker(position, options);
+        map.addOverlay(this.marker);
 
         if (this.props.autoViewport) {
-            map.setViewport([position],this.props.ViewportOptions);
+            map.setViewport([position], this.props.viewportOptions || {});
+        }
+    }
+
+    parsePosition(position: BMapGL.Point): BMapGL.Point {
+        let point: BMapGL.Point;
+        let isMC = this.props.coordType === 'bd09mc';
+
+        if (position instanceof Array) {
+            point = new BMapGL.Point(position[0], position[1]);
+        } else if (position instanceof BMapGL.Point) {
+            point = position;
+        } else {
+            point = new BMapGL.Point(position!.lng, position!.lat);
         }
 
-        this.instance = this.marker;
+        if (isMC) {
+            point = MercatorProjection.convertMC2LL(point);
+        }
+        return point;
+    }
+
+    parseIcon(icon: BMapGL.Icon | string): BMapGL.Icon {
+        let renderIcon: BMapGL.Icon;
+
+        if (icon && icon instanceof BMapGL.Icon) {
+            renderIcon = icon;
+        } else {
+            if (icon && icons[icon]) {
+                renderIcon = icons[icon];
+            } else {
+                renderIcon = icons.simple_red;
+            }
+        }
+        return renderIcon;
     }
 
     render(){
@@ -202,7 +212,7 @@ class Marker extends Component<MarkerProps> {
  * defaultProps属性要放在外面，不然生成API文档时，没有默认值
  */
 Marker.defaultProps = {
-    
+    icon: 'simple_red'
 };
 
 /**

@@ -1,7 +1,14 @@
 /**
  * 百度墨卡托投影类
  */
+
 function MercatorProjection() {
+}
+MercatorProjection.convertMC2LL = function(point) {
+    return point;
+}
+MercatorProjection.convertLL2MC = function(point) {
+    return point;
 }
 
 function extend(obj, options) {

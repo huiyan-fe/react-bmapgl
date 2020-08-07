@@ -85,7 +85,10 @@ module.exports = {
   webpackConfig: {
     resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.
-      extensions: ['.ts', '.tsx', '.js', 'jsx']
+      extensions: ['.ts', '.tsx', '.js', 'jsx'],
+      alias: {
+        '@': path.resolve('src')
+      }
     },
     module: {
       rules: [

@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "commonjs",
     "declaration": true,
     "outDir": "dist"
   },
-  "exclude": ["**/__tests__"]
+  "exclude": ["**/__tests__", "**/bmapgl-tests.ts"]
 }

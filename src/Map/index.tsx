@@ -82,6 +82,7 @@ const methodsMap: Methods = {
 class Map extends Component<MapProps, {}> {
 
     private el = React.createRef<HTMLDivElement>();
+    static defaultProps: MapProps | object;
     map: BMapGL.Map;
     options: Options = [
         'minZoom',
@@ -89,14 +90,12 @@ class Map extends Component<MapProps, {}> {
         'mapType'
     ];
 
-    static defaultProps: MapProps;
-
     constructor(props: MapProps) {
         super(props);
     }
 
     componentDidMount() {
-        this.initMap();
+        this.initialize();
         this.forceUpdate();
     }
 
@@ -117,7 +116,7 @@ class Map extends Component<MapProps, {}> {
         }
     }
 
-    initMap(): void {
+    initialize(): void {
         // 创建Map实例
         let options = this.getOptions();
         let map = new BMapGL.Map(this.el.current!, options as BMapGL.MapOptions);
@@ -175,7 +174,6 @@ class Map extends Component<MapProps, {}> {
  * defaultProps属性要放在外面，不然生成API文档时，没有默认值
  */
 Map.defaultProps = {
-    // @ts-ignore
     center: {lng: 116.404449, lat: 39.914889},
     zoom: 12,
     style: {

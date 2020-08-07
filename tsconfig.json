@@ -25,6 +25,6 @@
     "allowJs": true,
     "isolatedModules": true
   },
-  "include": ["./src/**/*.tsx"],
+  "include": ["./src/**/*.tsx", "./types/**/*.ts"],
   "exclude": ["node_modules", "dist", "build"]
 }

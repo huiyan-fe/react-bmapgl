@@ -11,7 +11,7 @@ export {default as Map} from './Map';
 
 
 // Overlay 覆盖物组件
-
+export {default as Marker} from './Overlay/Marker';
 
 // Layer 图层组件
 

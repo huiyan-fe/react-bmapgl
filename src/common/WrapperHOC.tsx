@@ -8,7 +8,7 @@ import React from 'react';
 import shallowequal from 'shallowequal';
 import Component from './Component';
 
-export type MapInstance = BMapGL.Map & BMapGL.Overlay;
+export type MapInstance = BMapGL.Map | BMapGL.Overlay;
 export type Events = string[];
 export type Options = string[];
 export type Methods = {
