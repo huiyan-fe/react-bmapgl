@@ -15,7 +15,7 @@ https://huiyan-fe.github.io/react-bmapgl/
 ### 引入脚本
 首先，需要在你的`index.html`模板页面头部加载百度地图JavaScript Api代码，密钥可去[百度地图开放平台官网](http://lbsyun.baidu.com/apiconsole/key)申请
 ```html
-<script type="text/javascript" src="http://api.map.baidu.com/api?type=webgl&v=1.0&ak=您的密钥"></script>
+<script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=您的密钥"></script>
 ```
 然后，使用npm方式安装react组件库，然后通过es模块加载
 ```bash
