@@ -1,4 +1,29 @@
 module.exports.styles = {
+  ComponentsList: {
+    item: {
+      '& a': {
+        cursor: 'auto',
+        color: '#333 !important',
+      },
+      cursor: 'auto',
+      fontSize: '18px',
+      margin: '12px 0'
+    },
+    isChild: {
+      '& a:hover': {
+        cursor: 'pointer',
+        color: '#6E93DE !important',
+      },
+      cursor: 'pointer',
+      fontSize: '16px',
+      margin: '8px 0' 
+    },
+    isSelected: {
+      '& a': {
+        color: '#5E87DB !important',
+      },
+    }
+  },
   SectionHeading: {
     wrapper: {
       margin: '2em 0',
@@ -6,58 +31,72 @@ module.exports.styles = {
     sectionName: {
       '&:hover, &:active': {
         textDecoration: 'none',
-        borderBottom: '2px solid #ff6044',
+        borderBottom: '2px solid #5479C4',
       },
+    },
+  },
+  Table: {
+    cellHeading: {
+      minWidth: '150px'
+    }
+  },
+  Name: {
+    name: {
+      fontWeight: 'bold'
     },
   },
   Type: {
     type: {
-      width: '145px',
+      width: '240px',
       display: 'inline-block',
-      fontSize: '11px',
-      fontWeight: 'bold',
+      fontSize: '12px'
+    }
+  },
+  Editor: {
+    root: {
+      lineHeight: '1.6'
     },
   },
-  ComponentsList: {
-    item: {
-      '& a': {
-        cursor: 'pointer',
-        color: '#525252 !important',
-      },
-      '& a:hover, & a:active': {
-        color: '#ff6044 !important',
-      },
-    },
-  },
+  Code: {
+    code: {
+      background: '#f5f5f5',
+      borderRadius: '6px',
+      padding: '0.2em 0.3em',
+      margin: '0 2px',
+      fontSize: '85%',
+      fontFamily: 'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'
+    }
+  }
 }
 
 module.exports.theme = {
-  sidebarWidth: 284,
+  sidebarWidth: 240,
+  font: ['PingFangSC-Regular', '-apple-system', 'PingFang SC', 'Microsoft YaHei', 'Helvetica', 'sans-serif'],
   fontSize: {
     base: 15,
-    h1: 33,
-    h2: 27,
-    h3: 20,
+    h1: 36,
+    h2: 28,
+    h3: 22,
     h4: 18,
     h5: 16,
     h6: 16,
     small: 13,
-    text: 15,
+    text: 16,
   },
   color: {
     base: '#333',
     baseBackground: '#fff',
     border: '#e8e8e8',
     codeBackground: '#f5f5f5',
-    error: '#c00',
+    error: '#FF7A2A',
     light: '#767676',
     lightest: '#ccc',
-    link: '#f6412d',
-    linkHover: '#ff735d',
-    ribbonBackground: '#f6412d',
+    link: '#5E87DB',
+    linkHover: '#6E93DE',
+    ribbonBackground: '#5E87DB',
     ribbonText: '#fff',
     sidebarBackground: '#f5f5f5',
-    name: '#f92672',
+    name: '#415E99',
     type: '#929292',
   },
 }

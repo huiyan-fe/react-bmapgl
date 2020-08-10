@@ -117,6 +117,10 @@ class Map extends Component<MapProps, {}> {
     }
 
     initialize(): void {
+        if (this.map) {
+            return;
+        }
+
         // 创建Map实例
         let options = this.getOptions();
         let map = new BMapGL.Map(this.el.current!, options as BMapGL.MapOptions);
@@ -184,6 +188,6 @@ Map.defaultProps = {
 
 /**
  * 地图核心对象，地图控件、覆盖物、图层等需作为其子组件，以获得map的实例化对象
- * @visibleName 地图 Map
+ * @visibleName Map 地图
  */
 export default Wrapper(Map, eventsMap, methodsMap);

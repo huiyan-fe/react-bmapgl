@@ -9,6 +9,7 @@
     "sourceMap": false,
     "baseUrl": ".",
     "rootDir": "src",
+    "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "jsx": "react",
@@ -26,5 +27,5 @@
     "isolatedModules": true
   },
   "include": ["./src/**/*.tsx", "./types/**/*.ts"],
-  "exclude": ["node_modules", "dist", "build"]
+  "exclude": ["node_modules", "dist", "build", "./types/**/bmapgl-tests.ts"]
 }

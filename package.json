@@ -6,7 +6,7 @@
   "scripts": {
     "start": "styleguidist server",
     "build": "rm -rf dist && tsc --build tsconfig.build.json",
-    "build:doc": "styleguidist build",
+    "build:doc": "rm -rf styleguide && styleguidist build",
     "deploy": "gh-pages -d styleguide",
     "page": "npm run build:doc && npm run deploy",
     "prepublish": "npm run build"
@@ -40,6 +40,7 @@
     "@types/shallowequal": "^1.1.1",
     "babel-loader": "^8.1.0",
     "cz-conventional-changelog": "^3.2.0",
+    "file-loader": "^6.0.0",
     "gh-pages": "^3.1.0",
     "react-docgen-typescript": "^1.20.1",
     "react-styleguidist": "^11.0.8",

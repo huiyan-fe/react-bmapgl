@@ -6,31 +6,30 @@ module.exports = {
   title: 'React-BMapGL文档',
   sections: [
     {
-      name: '快速开始',
+      name: 'Introduction',
       content: 'README.md',
     },
     {
-      name: '基础',
+      name: 'Base',
       components: ['src/Map'],
       sectionDepth: 1,
     },
     {
-      name: '控件',
+      name: 'Control',
       components: 'src/Control/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: '覆盖物',
+      name: 'Overlay',
       components: 'src/Overlay/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: '地图图层',
+      name: 'Layer',
       components: 'src/Layer/[A-Z]*.tsx',
-      sectionDepth: 0,
+      sectionDepth: 1,
     },
   ],
-  // 每一节一页, 避免加载多个地图实例
   pagePerSection: true,
   ribbon: {
     url: 'https://github.com/huiyan-fe/react-bmapgl',
@@ -58,9 +57,9 @@ module.exports = {
     head: {
       links: [
         {
-          rel: 'stylesheet',
-          href: '//code.bdstatic.com/npm/semantic-ui@2.4.1/dist/semantic.min.css',
-        },
+          rel: 'SHORTCUT ICON',
+          href: './logo.ico'
+        }
       ],
       scripts: [
         {
@@ -70,24 +69,26 @@ module.exports = {
       ]
     },
   },
+  previewDelay: 1000,
+  skipComponentsWithoutExample: true,
   theme: theme,
   styles: styles,
   exampleMode: 'expand',
   usageMode: 'expand',
-  // styleguideComponents: {
-  //   LogoRenderer: path.join(__dirname, 'rsg-components/Logo'),
-  //   ReactComponentRenderer: path.join(__dirname, 'rsg-components/ReactComponent'),
-  // },
-  // require: [path.resolve(__dirname, 'docs/helpers/setup.tsx')],
+  styleguideComponents: {
+    LogoRenderer: path.join(__dirname, 'styleguide-components/Logo'),
+  },
   // Typescript支持
   resolver: require('react-docgen').resolver.findAllComponentDefinitions,
-  propsParser: require('react-docgen-typescript').withCustomConfig('./tsconfig.json', []).parse,
+  propsParser: require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
+    // If set to true, types that are optional will not display " | undefined" in the type.
+    shouldRemoveUndefinedFromOptional: true
+  }).parse,
   webpackConfig: {
     resolve: {
-      // Add `.ts` and `.tsx` as a resolvable extension.
-      extensions: ['.ts', '.tsx', '.js', 'jsx'],
+      extensions: ['.ts', '.tsx', '.js', 'jsx', 'json'],
       alias: {
-        '@': path.resolve('src')
+        'react-bmapgl': path.resolve('src')
       }
     },
     module: {
@@ -96,6 +97,13 @@ module.exports = {
           test: /\.(js||jsx|ts|tsx)$/,
           exclude: /node_modules/,
           loader: 'babel-loader'
+        },
+        {
+          test: /\.(png|jpg|jpeg|gif|webp|ico)$/,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[ext]'
+          }
         },
       ],
     },
