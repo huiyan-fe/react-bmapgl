@@ -11,9 +11,9 @@ export interface ControlProps {
     /** 地图实例，来自父元素`<Map>`的继承 */
     map: BMapGL.Map;
     /** 控件的位置 */
-    anchor: BMapGL.ControlAnchor;
+    anchor?: BMapGL.ControlAnchor;
     /** 控件的相对像素偏移量 */
-    offset: BMapGL.Size;
+    offset?: BMapGL.Size;
 }
 
 export default class Control<P extends ControlProps, S = {}, SS = any> extends Component<P, S, SS> {
@@ -35,11 +35,11 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
 
         let isAnchorChanged: boolean = !shallowEqual(anchor, preAnchor);
         let isOffsetChanged: boolean = !shallowEqual(offset, preOffset);
-        if (isAnchorChanged) {
-            this.control.setAnchor(anchor);
+        if (anchor && isAnchorChanged) {
+            this.control.setAnchor(anchor!);
         }
-        if (isOffsetChanged) {
-            this.control.setOffset(offset);
+        if (offset && isOffsetChanged) {
+            this.control.setOffset(offset!);
         }
     }
 

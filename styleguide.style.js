@@ -70,7 +70,7 @@ module.exports.styles = {
 }
 
 module.exports.theme = {
-  sidebarWidth: 240,
+  sidebarWidth: 300,
   font: ['PingFangSC-Regular', '-apple-system', 'PingFang SC', 'Microsoft YaHei', 'Helvetica', 'sans-serif'],
   fontSize: {
     base: 15,

@@ -36,6 +36,7 @@ const eventsMap: Events = [
     'mouseup',
     'mouseout',
     'mouseover',
+    'mousemove',
     'remove',
     'lineupdate'
 ];
