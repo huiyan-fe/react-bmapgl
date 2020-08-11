@@ -62,7 +62,7 @@ export default class Polyline extends Graphy<PolylineProps> {
     }
 
     getOverlay(): BMapGL.Polyline {
-        var path = this.props.path;
+        let path = this.props.path;
 
         path = path.map((point: BMapGL.Point) => {
             return new BMapGL.Point(point.lng, point.lat);

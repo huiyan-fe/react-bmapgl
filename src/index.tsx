@@ -8,7 +8,9 @@
 export {default as Map} from './Map';
 
 // Control 地图控件
-
+export {default as MapTypeControl} from './Control/MapTypeControl';
+export {default as ScaleControl} from './Control/ScaleControl';
+export {default as ZoomControl} from './Control/ZoomControl';
 
 // Overlay 覆盖物组件
 export {default as Marker} from './Overlay/Marker';

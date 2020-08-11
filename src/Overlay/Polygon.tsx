@@ -67,7 +67,7 @@ export default class Polygon extends Graphy<PolygonProps> {
     }
 
     getOverlay(): BMapGL.Polygon {
-        var path = this.props.path;
+        let path = this.props.path;
 
         path = path.map((point: BMapGL.Point) => {
             return new BMapGL.Point(point.lng, point.lat);
