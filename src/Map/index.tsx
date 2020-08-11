@@ -21,7 +21,7 @@ export interface MapProps {
     /** 地图最大缩放级别 */
     maxZoom?: BMapGL.ZoomType;
     /** 地图类型，普通地图或地球模式 */
-    mapType?: 'BMAP_NORMAL_MAP' | 'BMAP_EARTH_MAP';
+    mapType?: 'normal' | 'earth';
     /** 地图旋转角度 */
     heading?: number;
     /** 地图倾斜角度 */
@@ -123,6 +123,10 @@ class Map extends Component<MapProps, {}> {
 
         // 创建Map实例
         let options = this.getOptions();
+        if (options.mapType) {
+            options.mapType = (options.mapType === 'normal' ? BMAP_NORMAL_MAP : options.mapType);
+            options.mapType = (options.mapType === 'earth' ? BMAP_EARTH_MAP : options.mapType);
+        }
         let map = new BMapGL.Map(this.el.current!, options as BMapGL.MapOptions);
 
         this.map = map;
