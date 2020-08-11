@@ -12,6 +12,9 @@ export {default as Map} from './Map';
 
 // Overlay 覆盖物组件
 export {default as Marker} from './Overlay/Marker';
+export {default as Polyline} from './Overlay/Polyline';
+export {default as Polygon} from './Overlay/Polygon';
+export {default as Circle} from './Overlay/Circle';
 
 // Layer 图层组件
 

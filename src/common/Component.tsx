@@ -15,11 +15,11 @@ export default class Component<P = {}, S = {}, SS = any> extends PureComponent<P
         return component.instance;
     }
 
-    getOptions(): InstanceOptions {
+    getOptions(props: P = this.props): InstanceOptions {
         let options = {};
         this.options.map((key: string) => {
-            if (this.props[key] !== undefined) {
-                options[key] = this.props[key];
+            if (props[key] !== undefined) {
+                options[key] = props[key];
             }
         });
         return options;

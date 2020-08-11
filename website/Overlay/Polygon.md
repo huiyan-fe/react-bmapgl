@@ -12,14 +12,16 @@ class Example extends React.Component {
         zoom={12}
         tilt={40}
       >
-        <Polyline
+        <Polygon
           path={[
             new BMapGL.Point(116.35, 39.88),
             new BMapGL.Point(116.40, 39.92),
             new BMapGL.Point(116.33, 40.01),
           ]}
           strokeColor="#f00"
-          strokeWeight={10}
+          strokeWeight={2}
+          fillColor="#ff0"
+          fillOpacity={0.3}
         />
       </Map>
     )

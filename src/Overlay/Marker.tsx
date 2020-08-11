@@ -6,7 +6,7 @@
 
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
-import shallowequal from 'shallowequal';
+import shallowEqual from 'shallowequal';
 import { MercatorProjection } from '../utils';
 
 const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
@@ -127,18 +127,15 @@ class Marker extends Component<MarkerProps> {
         let {position, icon, autoViewport, offset, isTop} = this.props;
         let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop} = prevProps;
 
-        let isDataChanged: boolean = position && !shallowequal(position, prePosition);
-        let isIconChanged: boolean = !!(icon && !shallowequal(icon, preIcon));
-        let isViewportChanged: boolean = !shallowequal(autoViewport, preViewport);
-        let isOffsetChanged: boolean = !!(offset && !shallowequal(offset, preOffset));
-        let isTopChanged: boolean = !shallowequal(isTop, preTop);
+        let isDataChanged: boolean = position && !shallowEqual(position, prePosition);
+        let isIconChanged: boolean = !!(icon && !shallowEqual(icon, preIcon));
+        let isViewportChanged: boolean = !shallowEqual(autoViewport, preViewport);
+        let isOffsetChanged: boolean = !!(offset && !shallowEqual(offset, preOffset));
+        let isTopChanged: boolean = !shallowEqual(isTop, preTop);
         let point = this.parsePosition(position);
 
         if (isDataChanged) {
             this.marker.setPosition(point);
-        }
-        if (autoViewport && (isDataChanged || isViewportChanged)) {
-            this.props.map.setViewport([point], this.props.viewportOptions || {});
         }
         if (isIconChanged) {
             let renderIcon: BMapGL.Icon = this.parseIcon(icon);
@@ -149,6 +146,9 @@ class Marker extends Component<MarkerProps> {
         }
         if (isTopChanged) {
             this.marker.setTop(!!isTop);
+        }
+        if (autoViewport && (isDataChanged || isViewportChanged)) {
+            this.props.map.setViewport([point], this.props.viewportOptions || {});
         }
     }
 
