@@ -23,7 +23,7 @@ class Example extends React.Component {
 
 ### 个性化地图
 ```jsx
-import mapstyle from '../mapstyle.json';
+import mapstyle from '../static/mapstyle.json';
 
 class Example extends React.Component {
   render() {

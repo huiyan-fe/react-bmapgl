@@ -19,7 +19,8 @@ export {default as Polygon} from './Overlay/Polygon';
 export {default as Circle} from './Overlay/Circle';
 
 // Layer 图层组件
-
+export {default as MapvglView} from './Layer/MapvglView';
+export {default as MapvglLayer} from './Layer/MapvglLayer';
 
 // Library 开源工具库
 
