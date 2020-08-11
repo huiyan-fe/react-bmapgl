@@ -4,7 +4,6 @@
  * @email hdr01@126.com
  */
 
-import React from 'react';
 import shallowequal from 'shallowequal';
 import Component from './Component';
 
@@ -43,15 +42,15 @@ function unregisterEvents(component: Component, instance: MapInstance) {
  * @param {Methods} methodsMap 属性和对应的2个切换方法
  * @return 修改过后的子组件
  */
-function wrapMethods<P>(component: React.ComponentClass<P>, methodsMap?: Methods): React.ComponentClass<P> {
-    const getInstance = component.prototype.getInstance;
-    const componentDidMount = component.prototype.componentDidMount;
-    const componentDidUpdate = component.prototype.componentDidUpdate;
+function wrapMethods<Comp>(component: Comp, methodsMap?: Methods): Comp {
+    const getInstance = component['prototype'].getInstance;
+    const componentDidMount = component['prototype'].componentDidMount;
+    const componentDidUpdate = component['prototype'].componentDidUpdate;
     if (!getInstance) {
         return component;
     }
     if (methodsMap && Object.keys(methodsMap).length > 0) {
-        component.prototype.componentDidMount = function () {
+        component['prototype'].componentDidMount = function () {
             if (componentDidMount) {
                 componentDidMount.call(this);
             }
@@ -66,7 +65,7 @@ function wrapMethods<P>(component: React.ComponentClass<P>, methodsMap?: Methods
                 }
             });
         };
-        component.prototype.componentDidUpdate = function (prevProps: {}, prevState: {}) {
+        component['prototype'].componentDidUpdate = function (prevProps: {}, prevState: {}) {
             Object.keys(methodsMap).forEach(key => {
                 if (!shallowequal(this.props[key], prevProps[key])) {
                     const instance = getInstance(this);
@@ -91,19 +90,19 @@ function wrapMethods<P>(component: React.ComponentClass<P>, methodsMap?: Methods
  * @param {Events} eventsMap 事件名数组
  * @return 修改过后的子组件
  */
-function wrapEvents<P>(component: React.ComponentClass<P>, eventsMap?: Events): React.ComponentClass<P> {
-    const getInstance = component.prototype.getInstance;
-    const componentDidUpdate = component.prototype.componentDidUpdate;
-    const componentDidMount = component.prototype.componentDidMount;
-    const componentWillUnmount = component.prototype.componentWillUnmount;
+function wrapEvents<Comp>(component: Comp, eventsMap?: Events): Comp {
+    const getInstance = component['prototype'].getInstance;
+    const componentDidUpdate = component['prototype'].componentDidUpdate;
+    const componentDidMount = component['prototype'].componentDidMount;
+    const componentWillUnmount = component['prototype'].componentWillUnmount;
     if (eventsMap && eventsMap.length > 0) {
-        component.prototype.componentDidMount = function () {
+        component['prototype'].componentDidMount = function () {
             if (componentDidMount) {
                 componentDidMount.call(this);
             }
             registerEvents(this, getInstance(this), eventsMap);
         };
-        component.prototype.componentDidUpdate = function (prevProps: {}, prevState: {}) {
+        component['prototype'].componentDidUpdate = function (prevProps: {}, prevState: {}) {
             if (!shallowequal(this.props, prevProps)) {
                 unregisterEvents(this, getInstance(this));
             }
@@ -114,7 +113,7 @@ function wrapEvents<P>(component: React.ComponentClass<P>, eventsMap?: Events): 
                 registerEvents(this, getInstance(this), eventsMap);
             }
         };
-        component.prototype.componentWillUnmount = function () {
+        component['prototype'].componentWillUnmount = function () {
             unregisterEvents(this, getInstance(this));
             if (componentWillUnmount) {
                 componentWillUnmount.call(this);
@@ -124,7 +123,7 @@ function wrapEvents<P>(component: React.ComponentClass<P>, eventsMap?: Events): 
     return component;
 }
 
-export default function Wrapper<P>(Component: React.ComponentClass<P>, eventsMap?: Events, methodsMap?: Methods): React.ComponentClass<P> {
+export default function Wrapper<Comp>(Component: Comp, eventsMap?: Events, methodsMap?: Methods): Comp {
     let component = wrapMethods(Component, methodsMap);
     component = wrapEvents(component, eventsMap);
     return component;
