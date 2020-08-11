@@ -72,6 +72,14 @@ interface MarkerProps {
     autoViewport?: boolean;
     /** `autoViewport`打开时生效，配置视野的参数 */
     viewportOptions?: BMapGL.ViewportOptions;
+    /** 标注的像素偏移 */
+    offset?: BMapGL.Size;
+    /** 是否在调用`Map.clearOverlays()`时清除此覆盖物 */
+    enableMassClear?: boolean;
+    /** 是否可拖拽 */
+    enableDragging?: boolean;
+    /** 是否将标注置于其他标注之上。默认情况下纬度低盖住纬度高的标注 */
+    isTop?: boolean;
 };
 
 const eventsMap: Events = [
@@ -116,12 +124,14 @@ class Marker extends Component<MarkerProps> {
     }
 
     componentDidUpdate(prevProps: MarkerProps) {
-        let {position, icon, autoViewport} = this.props;
-        let {position: prePosition, icon: preIcon, autoViewport: preViewport} = prevProps;
+        let {position, icon, autoViewport, offset, isTop} = this.props;
+        let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop} = prevProps;
 
         let isDataChanged: boolean = position && !shallowequal(position, prePosition);
         let isIconChanged: boolean = !!(icon && !shallowequal(icon, preIcon));
         let isViewportChanged: boolean = !shallowequal(autoViewport, preViewport);
+        let isOffsetChanged: boolean = !!(offset && !shallowequal(offset, preOffset));
+        let isTopChanged: boolean = !shallowequal(isTop, preTop);
         let point = this.parsePosition(position);
 
         if (isDataChanged) {
@@ -133,6 +143,12 @@ class Marker extends Component<MarkerProps> {
         if (isIconChanged) {
             let renderIcon: BMapGL.Icon = this.parseIcon(icon);
             this.marker.setIcon(renderIcon);
+        }
+        if (isOffsetChanged) {
+            this.marker.setOffset(offset!);
+        }
+        if (isTopChanged) {
+            this.marker.setTop(!!isTop);
         }
     }
 
@@ -153,7 +169,6 @@ class Marker extends Component<MarkerProps> {
     }
 
     initialize() {
-
         let map = this.props.map;
 
         this.destroy();
@@ -164,6 +179,9 @@ class Marker extends Component<MarkerProps> {
         options.icon = icon;
 
         this.instance = this.marker = new BMapGL.Marker(position, options);
+        if (this.props.isTop) {
+            this.marker.setTop(true);
+        }
         map.addOverlay(this.marker);
 
         if (this.props.autoViewport) {
