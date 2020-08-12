@@ -4,13 +4,11 @@
  * @email hdr01@126.com
  */
 
-import { Component } from '../common';
+import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
 
-export interface GraphyProps {
-    /** 地图实例，来自父元素`<Map>`的继承 */
-    map: BMapGL.Map;
+export interface GraphyProps extends MapChildrenProps {
     /** 自动聚焦视野 */
     autoViewport?: boolean;
     /** `autoViewport`打开时生效，配置视野的参数 */

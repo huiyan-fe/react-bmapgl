@@ -7,17 +7,24 @@
 // @ts-ignore
 import {View, BloomEffect, BrightEffect, BlurEffect} from 'mapvgl';
 import React, { ReactElement, ReactNode } from 'react';
-import { Component } from '../common';
+import { Component, MapChildrenProps } from '../common';
 
-interface MapvglViewProps {
-    /** 地图实例，来自父元素`<Map>`的继承 */
-    map: BMapGL.Map;
+interface MapvglViewProps extends MapChildrenProps {
     /** 后处理效果数组 */
     effects?: string[];
 }
 
+export interface MapVGLViewChildrenProps {
+    /** mapvgl的图层管理器实例，来自父元素`<MapvglView>`的继承 */
+    view: MapVGLView;
+}
 export interface MapVGLView {
-    removeLayer(x: any): void;
+    addLayer(x: MapVGLLayer): void;
+    removeLayer(x: MapVGLLayer): void;
+}
+export interface MapVGLLayer {
+    setData(x: string[]): void;
+    setOptions(x: object): void;
 }
 
 export default class MapvglView extends Component<MapvglViewProps> {

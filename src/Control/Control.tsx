@@ -4,12 +4,10 @@
  * @email hdr01@126.com
  */
 
-import { Component } from '../common';
+import { Component, MapChildrenProps } from '../common';
 import shallowEqual from 'shallowequal';
 
-export interface ControlProps {
-    /** 地图实例，来自父元素`<Map>`的继承 */
-    map: BMapGL.Map;
+export interface ControlProps extends MapChildrenProps {
     /** 控件的位置 */
     anchor?: BMapGL.ControlAnchor;
     /** 控件的相对像素偏移量 */

@@ -6,14 +6,10 @@
 
 // @ts-nocheck
 import * as mapvgl from 'mapvgl';
-import { Component } from '../common';
-import { MapVGLView } from './MapvglView';
+import { Component, MapChildrenProps } from '../common';
+import { MapVGLView, MapVGLViewChildrenProps } from './MapvglView';
 
-interface MapvglLayerProps {
-    /** 地图实例，来自父元素`<Map>`的继承 */
-    map: BMapGL.Map;
-    /** mapvgl的图层管理器实例，来自父元素`<MapvglView>`的继承 */
-    view: MapVGLView;
+interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
 };
 
 export default class MapvglLayer extends Component<MapvglLayerProps> {
