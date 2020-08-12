@@ -140,11 +140,9 @@ class Map extends Component<MapProps, {}> {
             map.setMapStyleV2(this.props.mapStyleV2);
         }
         if (this.props.heading) {
-            // @ts-ignore
             map.setHeading(this.props.heading);
         }
         if (this.props.tilt) {
-            // @ts-ignore
             map.setTilt(this.props.tilt);
         }
     }
