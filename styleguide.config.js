@@ -29,6 +29,11 @@ module.exports = {
       components: 'src/Layer/[A-Z]*.tsx',
       sectionDepth: 1,
     },
+    {
+      name: 'Library',
+      components: 'src/Library/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
   ],
   pagePerSection: true,
   ribbon: {
