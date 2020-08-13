@@ -22,6 +22,7 @@ class Example extends React.Component {
           strokeWeight={2}
           fillColor="#ff0"
           fillOpacity={0.3}
+          onMouseover={e => {console.log(e)}}
         />
       </Map>
     )

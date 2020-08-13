@@ -26,6 +26,8 @@ export interface MapProps {
     heading?: number;
     /** 地图倾斜角度 */
     tilt?: number;
+    /** 鼠标左键单击事件的回调函数 */
+    onClick?(e: Event): void;
     /** 地图容器的class类名 */
     className?: string;
     /** 地图容器父元素的style样式 */

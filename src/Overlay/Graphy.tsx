@@ -25,11 +25,24 @@ export interface GraphyProps extends MapChildrenProps {
     fillColor?: string;
     /** 填充的透明度，范围`0-1` */
     fillOpacity?: number;
+    /** 鼠标左键单击事件的回调函数 */
+    onClick?(e: Event): void;
+    /** 鼠标左键双击事件的回调函数 */
+    onDblick?(e: Event): void;
+    /** 鼠标右键单击事件的回调函数 */
+    onRightclick?(e: Event): void;
+    /** 鼠标指针移入覆盖物事件的回调函数 */
+    onMouseover?(e: Event): void;
+    /** 鼠标指针移出覆盖物事件的回调函数 */
+    onMouseout?(e: Event): void;
+    /** 鼠标指针在覆盖物上移动事件的回调函数 */
+    onMousemove?(e: Event): void;
 };
 
 const eventsMap: Events = [
     'click',
     'dblclick',
+    'rightclick',
     'mousedown',
     'mouseup',
     'mouseout',
@@ -43,7 +56,6 @@ const methodsMap: Methods = {
     enableMassClear: ['enableMassClear', 'disableMassClear'],
     enableEditing: ['enableEditing', 'disableEditing'],
 };
-
 
 class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS> {
 
