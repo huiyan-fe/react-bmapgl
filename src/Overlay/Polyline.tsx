@@ -7,7 +7,7 @@
 import Graphy, { GraphyProps } from './Graphy';
 import shallowEqual from 'shallowequal';
 
-interface PolylineProps extends GraphyProps {
+interface PolylineProps extends Omit<Omit<GraphyProps, 'fillColor'>, 'fillOpacity'> {
     /** 折线的坐标数组 */
     path: BMapGL.Point[];
     /** 折线的颜色，同CSS颜色 */

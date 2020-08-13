@@ -11,7 +11,7 @@ import { Component, MapChildrenProps } from '../common';
 
 interface MapvglViewProps extends MapChildrenProps {
     /** 后处理效果数组 */
-    effects?: string[];
+    effects?: ('bloom' | 'bright' | 'blur')[];
 }
 
 export interface MapVGLViewChildrenProps {

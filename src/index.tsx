@@ -23,7 +23,7 @@ export {default as MapvglView} from './Layer/MapvglView';
 export {default as MapvglLayer} from './Layer/MapvglLayer';
 
 // Library 开源工具库
-
+export {default as DrawingManager} from './Library/DrawingManager';
 
 // Service 地图服务
 

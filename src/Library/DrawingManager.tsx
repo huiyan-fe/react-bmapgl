@@ -1,10 +1,51 @@
-import React from 'react';
+/**
+ * @file 鼠标绘制工具库
+ * @author hedongran
+ * @email hdr01@126.com
+ */
+
+import React, { CSSProperties } from 'react';
 import { Component, MapChildrenProps } from '../common';
 import { requireScript, requireCss } from '../utils';
-import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
+import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
 
 export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapChildrenProps {
-    onOverlaycomplete(e: Event): void;
+    /** 是否开启绘制模式，默认不开启 */
+    isOpen?: boolean;
+    /** 当前的绘制模式, 默认是绘制点 */
+    drawingMode?: BMapGL.DrawingType;
+    /** 是否添加绘制工具栏控件，默认添加 */
+    enableDrawingTool?: boolean;
+    /** 绘制是否进行测距(画线时候)、测面积(画圆、多边形、矩形) */
+    enableCalculate?: boolean;
+    /** 绘制线和多边形时，是否开启鼠标吸附功能 */
+    enableSorption?: boolean;
+    /** 绘制多边形时，是否开启重叠部分裁剪功能 */
+    enableGpc?: boolean;
+    /** 是否开启限制绘制图形距离、面积功能，该功能依赖`enableCalculate`值为`true` */
+    enableLimit?: boolean;
+    /** 设置鼠标吸附的像素距离，开启`enableSorption`后生效 */
+    sorptionDistance?: number;
+    /** 设置图形距离、面积限制的实际值，开启`enableLimit`后生效 */
+    limitOptions?: BMapGL.DrawingLimitOptions;
+    /** 绘制工具栏控件的属性，`enableDrawingTool`值为`true`或默认时生效 */
+    drawingToolOptions?: BMapGL.DrawingToolOptions;
+    /** Marker的绘制样式与属性 */
+    markerOptions?: BMapGL.MarkerOptions;
+    /** Circle的绘制样式与属性 */
+    circleOptions?: BMapGL.CircleOptions;
+    /** Polyline的绘制样式与属性 */
+    polylineOptions?: BMapGL.PolylineOptions;
+    /** Polygon的绘制样式与属性 */
+    polygonOptions?: BMapGL.PolygonOptions;
+    /** Rectangle的绘制样式与属性 */
+    rectangleOptions?: BMapGL.PolygonOptions;
+    /** 跟随鼠标的提示label的绘制样式与属性 */
+    labelOptions?: CSSProperties;
+    /** 绘制完成时的回调函数 */
+    onOverlaycomplete?(e: Event, info: object): void;
+    /** 挂载元素的样式 */
+    style?: CSSProperties;
 }
 
 const eventsMap: Events = [
@@ -18,11 +59,11 @@ const methodsMap: Methods = {
 };
 
 const drawOptions = {
-    strokeColor: '#5E87DB', // 边线颜色。
-    fillColor: '#5E87DB', // 填充颜色。当参数为空时，圆形将没有填充效果。
-    strokeWeight: 2, // 边线的宽度，以像素为单位。
-    strokeOpacity: 1, // 边线透明度，取值范围0 - 1。
-    fillOpacity: 0.2 // 填充的透明度，取值范围0 - 1。
+    strokeColor: '#5E87DB',
+    fillColor: '#5E87DB',
+    strokeWeight: 2,
+    strokeOpacity: 1,
+    fillOpacity: 0.2
 };
 const labelOptions = {
     borderRadius: '2px',
@@ -34,44 +75,27 @@ const labelOptions = {
     padding: '5px'
 };
 
-const opts = {
-    enableDrawingTool: true, // 是否显示工具栏
-    enableCalculate: true, // 绘制是否进行测距(画线时候)、测面(画圆、多边形、矩形)
-    drawingToolOptions: {
-        enableTips: true,
-        customContainer: 'selectbox_Drawing',
-        hasCustomStyle: true,
-        offset: new BMapGL.Size(5, 5), // 偏离值
-        scale: 0.8, // 工具栏缩放比例
-        drawingModes: [
-            'marker',
-            'polyline',
-            'rectangle',
-            'polygon',
-            'circle',
-        ]
-    },
-    enableSorption: true, // 是否开启边界吸附功能
-    sorptionDistance: 20, // 边界吸附距离
-    enableGpc: true, // 是否开启延边裁剪功能
-    enbaleLimit: true,  // 是否开启超限提示
-    limitOptions: {
-        area: 50000000, // 面积超限值
-        distance: 30000
-    },
-    circleOptions: drawOptions, // 圆的样式
-    polylineOptions: drawOptions, // 线的样式
-    polygonOptions: drawOptions, // 多边形的样式
-    rectangleOptions: drawOptions, // 矩形的样式
-    labelOptions: labelOptions // label的样式
-}
-
 class DrawingManager extends Component<DrawingManagerProps> {
 
+    private el = React.createRef<HTMLDivElement>();
     static defaultProps: DrawingManagerProps | object;
-    drawingmanager: BMapGL.DrawingManager;
+    drawingmanager: BMapGLLib.DrawingManager;
     options: Options = [
-
+        'isOpen',
+        'enableDrawingTool',
+        'enableCalculate',
+        'enableSorption',
+        'enableGpc',
+        'enableLimit',
+        'sorptionDistance',
+        'limitOptions',
+        'drawingToolOptions',
+        'markerOptions',
+        'circleOptions',
+        'polylineOptions',
+        'polygonOptions',
+        'rectangleOptions',
+        'labelOptions'
     ];
 
     constructor(props: DrawingManagerProps) {
@@ -89,6 +113,7 @@ class DrawingManager extends Component<DrawingManagerProps> {
     destroy() {
         if (this.drawingmanager) {
             this.drawingmanager.close();
+            // @ts-ignore
             this.drawingmanager = null;
         }
     }
@@ -97,6 +122,19 @@ class DrawingManager extends Component<DrawingManagerProps> {
         let map = this.props.map;
 
         this.destroy();
+
+        let opts = this.getOptions();
+        let drawStyles = ['circleOptions', 'polylineOptions', 'polygonOptions', 'rectangleOptions'];
+        for (let i = 0; i < drawStyles.length; i++) {
+            const styl = drawStyles[i];
+            if (!opts[styl]) {
+                opts[styl] = drawOptions; 
+            }
+        }
+        if (!opts.labelOptions) {
+           opts.labelOptions = labelOptions; 
+        }
+        opts.drawingToolOptions.customContainer = this.el.current;
 
         // 如果 BMapGLLib 已经加载过，会执行下面的
         if (window.BMapGLLib && BMapGLLib.DrawingManager) {
@@ -111,28 +149,47 @@ class DrawingManager extends Component<DrawingManagerProps> {
             requireScript('//mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.js')
                 .then(() => {
                     this.instance = this.drawingmanager = new BMapGLLib.DrawingManager(map, opts);
+                    // 因为是异步加载，所以不会自动注册事件和执行方法，需要手动注册和执行
+                    registerEvents(this, this.getInstance(this), eventsMap);
+                    toggleMethods(this, this.getInstance(this), methodsMap);
                 });
         }
     }
 
     render() {
         return (
-            <div className="huiyan-drawmanager" ref="drawmanager" id="selectbox_Drawing" style={{
-                position: 'absolute',
-                left: 20,
-                top: 20,
-                width: 350
-            }} />
+            <div
+                className="react-bmapgl-drawingmanager"
+                ref={this.el}
+                style={this.props.style}
+            />
         );
     }
 }
 
 DrawingManager.defaultProps= {
-    circleOptions: drawOptions, // 圆的样式
-    polylineOptions: drawOptions, // 线的样式
-    polygonOptions: drawOptions, // 多边形的样式
-    rectangleOptions: drawOptions, // 矩形的样式
-    labelOptions: labelOptions // label的样式
+    isOpen: false,
+    enableDrawingTool: true,
+    enableCalculate: false,
+    enableSorption: false,
+    enableGpc: false,
+    enableLimit: false,
+    sorptionDistance: 20,
+    limitOptions: {
+        area: 50000000,
+        distance: 30000
+    },
+    drawingToolOptions: {},
+    style: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: 360
+    }
 };
 
+/**
+ * 用来在地图上通过鼠标绘制覆盖物，该组件属于不属于原生JSAPI，属于开源工具库[BMapGLLib](https://github.com/huiyan-fe/BMapGLLib)
+ * @visibleName DrawingManager 鼠标绘制工具
+ */
 export default Wrapper(DrawingManager, eventsMap, methodsMap);

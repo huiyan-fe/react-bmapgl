@@ -4,18 +4,18 @@
  * @email hdr01@126.com
  */
 
-import shallowequal from 'shallowequal';
+import shallowEqual from 'shallowequal';
 import Component from './Component';
 
-export type MapInstance = BMapGL.Map | BMapGL.Overlay;
+export type MapInstance = BMapGL.Map | BMapGL.Overlay | BMapGLLib.DrawingManager;
 export type Events = string[];
 export type Options = string[];
 export type Methods = {
     [x: string]: string[]
 };
 
-function registerEvents(component: Component, instance: MapInstance, eventsMap?: Events) {
-    if (eventsMap && instance.addEventListener) {
+export function registerEvents(component: Component, instance: MapInstance, eventsMap?: Events) {
+    if (eventsMap && instance && instance.addEventListener) {
         component.registeredEvents = {};
         eventsMap.forEach((key: string) => {
             const methodName = `on${key.substr(0, 1).toUpperCase()}${key.substr(1)}`;
@@ -27,12 +27,29 @@ function registerEvents(component: Component, instance: MapInstance, eventsMap?:
     }
 }
 
-function unregisterEvents(component: Component, instance: MapInstance) {
-    if (component.registeredEvents && instance.removeEventListener) {
+export function unregisterEvents(component: Component, instance: MapInstance) {
+    if (component.registeredEvents && instance && instance.removeEventListener) {
         Object.keys(component.registeredEvents).forEach(key => {
             instance.removeEventListener(key, component.registeredEvents[key]);
         });
         component.registeredEvents = null;
+    }
+}
+
+export function toggleMethods(component: Component, instance: MapInstance, methodsMap: Methods, prevProps?: {}) {
+    if (methodsMap && instance) {
+        Object.keys(methodsMap).forEach(key => {
+            // 当在 componentDidMount 和 componentDidUpdate 时分别执行
+            if ((prevProps === undefined && component.props[key] !== undefined)
+                || (prevProps !== undefined && !shallowEqual(component.props[key], prevProps[key]))
+            ) {
+                if (component.props[key]) {
+                    instance && instance[methodsMap[key][0]](); 
+                } else {
+                    instance && instance[methodsMap[key][1]]();
+                }
+            }
+        });
     }
 }
 
@@ -54,28 +71,10 @@ function wrapMethods<Comp>(component: Comp, methodsMap?: Methods): Comp {
             if (componentDidMount) {
                 componentDidMount.call(this);
             }
-            Object.keys(methodsMap).forEach(key => {
-                if (this.props[key] !== undefined) {
-                    const instance = getInstance(this);
-                    if (this.props[key] && instance) {
-                        instance[methodsMap[key][0]](); 
-                    } else {
-                        instance[methodsMap[key][1]]();
-                    }
-                }
-            });
+            toggleMethods(this, getInstance(this), methodsMap);
         };
         component['prototype'].componentDidUpdate = function (prevProps: {}, prevState: {}) {
-            Object.keys(methodsMap).forEach(key => {
-                if (!shallowequal(this.props[key], prevProps[key])) {
-                    const instance = getInstance(this);
-                    if (this.props[key] && instance) {
-                        instance[methodsMap[key][0]](); 
-                    } else {
-                        instance[methodsMap[key][1]]();
-                    }
-                }
-            });
+            toggleMethods(this, getInstance(this), methodsMap, prevProps);
             if (componentDidUpdate) {
                 componentDidUpdate.call(this, prevProps, prevState);
             }
@@ -103,13 +102,13 @@ function wrapEvents<Comp>(component: Comp, eventsMap?: Events): Comp {
             registerEvents(this, getInstance(this), eventsMap);
         };
         component['prototype'].componentDidUpdate = function (prevProps: {}, prevState: {}) {
-            if (!shallowequal(this.props, prevProps)) {
+            if (!shallowEqual(this.props, prevProps)) {
                 unregisterEvents(this, getInstance(this));
             }
             if (componentDidUpdate) {
                 componentDidUpdate.call(this, prevProps, prevState);
             }
-            if (!shallowequal(this.props, prevProps)) {
+            if (!shallowEqual(this.props, prevProps)) {
                 registerEvents(this, getInstance(this), eventsMap);
             }
         };
