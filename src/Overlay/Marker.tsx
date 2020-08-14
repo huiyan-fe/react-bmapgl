@@ -79,6 +79,16 @@ interface MarkerProps {
     enableDragging?: boolean;
     /** 是否将标注置于其他标注之上。默认情况下纬度低盖住纬度高的标注 */
     isTop?: boolean;
+    /** 鼠标左键单击事件的回调函数 */
+    onClick?(e: Event): void;
+    /** 鼠标左键双击事件的回调函数 */
+    onDbclick?(e: Event): void;
+    /** 鼠标右键单击事件的回调函数 */
+    onRightclick?(e: Event): void;
+    /** 鼠标指针移入Marker事件的回调函数 */
+    onMouseover?(e: Event): void;
+    /** 鼠标指针移出Marker事件的回调函数 */
+    onMouseout?(e: Event): void;
 };
 
 const eventsMap: Events = [
