@@ -34,6 +34,16 @@ module.exports = {
       components: 'src/Library/[A-Z]*.tsx',
       sectionDepth: 1,
     },
+    {
+      name: 'Custom',
+      components: 'src/Custom/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
+    {
+      name: 'Services',
+      components: 'src/Services/[A-Z]*.tsx',
+      sectionDepth: 1,
+    }
   ],
   pagePerSection: true,
   ribbon: {
