@@ -7,7 +7,7 @@
 import Control, { ControlProps } from './Control';
 
 /**
- * 缩放控件
+ * 缩放控件，默认位于地图右下角
  * @visibleName ZoomControl 缩放控件
  */
 export default class ZoomControl extends Control<ControlProps> {

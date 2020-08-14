@@ -8,7 +8,12 @@ import { Component, MapChildrenProps } from '../common';
 import shallowEqual from 'shallowequal';
 
 export interface ControlProps extends MapChildrenProps {
-    /** 控件的位置 */
+    /** 控件的位置，可传下面4个参数： <br/>
+     * BMAP\_ANCHOR\_TOP\_LEFT: 左上 <br/>
+     * BMAP\_ANCHOR\_TOP\_RIGHT: 右上 <br/>
+     * BMAP\_ANCHOR\_BOTTOM\_LEFT: 左下 <br/>
+     * BMAP\_ANCHOR\_BOTTOM\_RIGHT: 右下 <br/>
+     */
     anchor?: BMapGL.ControlAnchor;
     /** 控件的相对像素偏移量 */
     offset?: BMapGL.Size;

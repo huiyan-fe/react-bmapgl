@@ -7,7 +7,7 @@
 import Control, { ControlProps } from './Control';
 
 /**
- * 比例尺控件
+ * 比例尺控件，默认位于地图左下角
  * @visibleName ScaleControl 比例尺控件
  */
 export default class ScaleControl extends Control<ControlProps> {

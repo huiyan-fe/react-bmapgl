@@ -7,7 +7,7 @@
 import Control, { ControlProps } from './Control';
 
 /**
- * 地图类型控件
+ * 地图类型控件，默认位于地图右上角
  * @visibleName MapTypeControl 地图类型控件
  */
 export default class MapTypeControl extends Control<ControlProps> {
