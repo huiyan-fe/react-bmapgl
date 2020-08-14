@@ -15,7 +15,7 @@ module.exports.styles = {
         color: '#6E93DE !important',
       },
       cursor: 'pointer',
-      fontSize: '16px',
+      fontSize: '15px',
       margin: '8px 0' 
     },
     isSelected: {
