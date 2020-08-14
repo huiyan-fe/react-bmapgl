@@ -9,6 +9,8 @@ import { default as Wrapper, Events, Options, Methods } from '../common/WrapperH
 import shallowEqual from 'shallowequal';
 
 export interface GraphyProps extends MapChildrenProps {
+    /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
+    coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */
     autoViewport?: boolean;
     /** `autoViewport`打开时生效，配置视野的参数 */

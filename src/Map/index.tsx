@@ -26,6 +26,12 @@ export interface MapProps {
     heading?: number;
     /** 地图倾斜角度 */
     tilt?: number;
+    /** 是否开启鼠标滚轮缩放 */
+    enableScrollWheelZoom?: boolean;
+    /** 是否开启双击鼠标缩放 */
+    enableDoubleClickZoom?: boolean;
+    /** 是否开启地图可拖拽缩放 */
+    enableDragging?: boolean;
     /** 鼠标左键单击事件的回调函数 */
     onClick?(e: Event): void;
     /** 地图容器的class类名 */

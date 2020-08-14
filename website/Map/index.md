@@ -23,7 +23,7 @@ class Example extends React.Component {
 
 ### 个性化地图
 ```jsx
-import mapstyle from '../static/mapstyle.json';
+import whitestyle from '../static/whitestyle'
 
 class Example extends React.Component {
   render() {
@@ -31,7 +31,7 @@ class Example extends React.Component {
       <Map
         center={new BMapGL.Point(116.404449, 39.914889)}
         zoom={12}
-        mapStyleV2={{styleJson: mapstyle}}
+        mapStyleV2={{styleJson: whitestyle}}
       />
     )
   }

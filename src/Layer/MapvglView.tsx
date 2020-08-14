@@ -6,7 +6,7 @@
 
 // @ts-ignore
 import {View, BloomEffect, BrightEffect, BlurEffect} from 'mapvgl';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, Fragment } from 'react';
 import { Component, MapChildrenProps } from '../common';
 
 interface MapvglViewProps extends MapChildrenProps {
@@ -15,49 +15,50 @@ interface MapvglViewProps extends MapChildrenProps {
 }
 
 export interface MapVGLViewChildrenProps {
-    /** mapvgl的图层管理器实例，来自父元素`<MapvglView>`的继承 */
-    view: MapVGLView;
-}
-export interface MapVGLView {
-    addLayer(x: MapVGLLayer): void;
-    removeLayer(x: MapVGLLayer): void;
-}
-export interface MapVGLLayer {
-    setData(x: string[]): void;
-    setOptions(x: object): void;
+    /** *mapvgl的图层管理器实例，来自父元素`<MapvglView>`的继承，无需手动传入 */
+    view: MapVGL.View;
 }
 
+/**
+ * 该组件将MapVGL的图层管理器使用`react`进行了一层封装。所有`<MapvglLayer>`组件需要作为该组件的子组件，文档参考[MapVGL图层管理器](https://mapv.baidu.com/gl/docs/View.html)
+ * @visibleName MapvglView MapVGL图层管理器
+ */
 export default class MapvglView extends Component<MapvglViewProps> {
 
-    mapvglView: any;
-    map: any;
-    
+    view: MapVGL.View;
+    map: BMapGL.Map;
+
+    constructor(props: MapvglViewProps) {
+        super(props);
+    }
+
     componentDidMount() {
         this.initialize();
         this.forceUpdate();
     }
 
     componentWillUnmount() {
-        if (this.mapvglView) {
-            this.mapvglView.destroy();
-            this.mapvglView = null;
+        if (this.view) {
+            this.view.destroy();
+            // @ts-ignore
+            this.view = null;
         }
     }
 
     componentDidUpdate(prevProps: MapvglViewProps) {
-        if (!this.map || !this.mapvglView) {
+        if (!this.map || !this.view) {
             this.initialize();
         }
     }
 
     initialize() {
         let map = this.props.map;
-        if (!map) {
+        if (!map || this.view) {
             return;
         }
         this.map = map;
 
-        if (!this.mapvglView) {
+        if (!this.view) {
             let effects: any[] = [];
             let simpleEffects = this.props.effects;
             if (simpleEffects && simpleEffects.length) {
@@ -71,7 +72,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
                     }
                 });
             }
-            this.mapvglView = new View({
+            this.view = new View({
                 effects,
                 map
             });
@@ -84,7 +85,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
      * @memberof MapvglView
      */
     renderChildren(children: ReactElement | ReactElement[]): ReactNode {
-        if (!children || !this.map || !this.mapvglView) {
+        if (!children || !this.map || !this.view) {
             return;
         }
 
@@ -98,7 +99,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
             } else {
                 return React.cloneElement(child, {
                     map: this.map,
-                    view: this.mapvglView
+                    view: this.view
                 });
             }
         });
@@ -106,9 +107,9 @@ export default class MapvglView extends Component<MapvglViewProps> {
 
     render() {
         return (
-            <div title="mapvgl view">
+            <Fragment>
                 {this.renderChildren(this.props.children as ReactElement)}
-            </div>
+            </Fragment>
         );
     }
 
