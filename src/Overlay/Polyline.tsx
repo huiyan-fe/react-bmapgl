@@ -52,7 +52,7 @@ export default class Polyline extends Graphy<PolylineProps> {
         let isDataChanged: boolean = path && !shallowEqual(path, prePath);
         let isViewportChanged: boolean = !shallowEqual(autoViewport, preViewport);
         if (isDataChanged) {
-            this.overlay.setPath(path);
+            this.overlay.setPath(this.parsePath(path));
         }
         if (autoViewport && (isDataChanged || isViewportChanged)) {
             let path = this.overlay.getPath();
@@ -62,13 +62,29 @@ export default class Polyline extends Graphy<PolylineProps> {
     }
 
     getOverlay(): BMapGL.Polyline {
-        let path = this.props.path;
-
-        path = path.map((point: BMapGL.Point) => {
-            return new BMapGL.Point(point.lng, point.lat);
-        });
-
+        let path = this.parsePath(this.props.path);
         return new BMapGL.Polyline(path, this.getOptions());
+    }
+
+    parsePath(path: BMapGL.Point[]): BMapGL.Point[] {
+        const isMC = this.props.coordType === 'bd09mc';
+        let out: BMapGL.Point[] = path.map((position: BMapGL.Point) => {
+            let point: BMapGL.Point;
+            if (position instanceof Array) {
+                point = new BMapGL.Point(position[0], position[1]);
+            } else if (position instanceof BMapGL.Point) {
+                point = position;
+            } else {
+                point = new BMapGL.Point(position!.lng, position!.lat);
+            }
+    
+            if (isMC) {
+                point = BMapGL.Projection.convertMC2LL(point);
+            }
+            return point;
+        });
+        
+        return out;
     }
 
     render() {

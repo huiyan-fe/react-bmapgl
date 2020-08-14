@@ -8,7 +8,6 @@
 import * as mapvgl from 'mapvgl';
 import { Component, MapChildrenProps } from '../common';
 import { MapVGLViewChildrenProps } from './MapvglView';
-import { MercatorProjection } from '../utils';
 
 interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
     /** 绘制图层的构造函数名称，注意`区分大小写` */
@@ -87,13 +86,14 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     setViewport() {
+        const isMC = this.props.coordType === 'bd09mc';
         let getPoint = (coordinate: number[]): BMapGL.Point => {
             let p = new BMapGL.Point(coordinate[0], coordinate[1]);
-            return this.props.options.coordType === 'bd09mc' ? MercatorProjection.convertMC2LL(p) : p;
+            return isMC ? BMapGL.Projection.convertMC2LL(p) : p;
         }
 
         let points: BMapGL.Point[] = [];
-        this.props.data.map((data: MapVGL.GeoJSON) => {
+        this.props.data.forEach((data: MapVGL.GeoJSON) => {
             if (data.geometry.type === 'Point') {
                 points.push(getPoint(data.geometry.coordinates));
             } else if (data.geometry.type === 'LineString') {

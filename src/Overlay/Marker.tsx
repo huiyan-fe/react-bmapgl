@@ -7,7 +7,6 @@
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
-import { MercatorProjection } from '../utils';
 
 const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
 
@@ -190,8 +189,8 @@ class Marker extends Component<MarkerProps> {
     }
 
     parsePosition(position: BMapGL.Point): BMapGL.Point {
+        const isMC = this.props.coordType === 'bd09mc';
         let point: BMapGL.Point;
-        let isMC = this.props.coordType === 'bd09mc';
 
         if (position instanceof Array) {
             point = new BMapGL.Point(position[0], position[1]);
@@ -202,7 +201,7 @@ class Marker extends Component<MarkerProps> {
         }
 
         if (isMC) {
-            point = MercatorProjection.convertMC2LL(point);
+            point = BMapGL.Projection.convertMC2LL(point);
         }
         return point;
     }

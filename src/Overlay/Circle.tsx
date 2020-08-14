@@ -60,7 +60,7 @@ export default class Circle extends Graphy<CircleProps> {
         let isRadiusChanged: boolean = !!(radius && !shallowEqual(radius, preRadius));
         let isViewportChanged: boolean = !shallowEqual(autoViewport, preViewport);
         if (isCenterChanged) {
-            this.overlay.setCenter(center);
+            this.overlay.setCenter(this.parseCenter(center));
         }
         if (isRadiusChanged) {
             this.overlay.setRadius(radius);
@@ -74,8 +74,25 @@ export default class Circle extends Graphy<CircleProps> {
 
     getOverlay(): BMapGL.Circle {
         let {center, radius} = this.props;
+        return new BMapGL.Circle(this.parseCenter(center), radius, this.getOptions());
+    }
 
-        return new BMapGL.Circle(center, radius, this.getOptions());
+    parseCenter(center: BMapGL.Point): BMapGL.Point {
+        const isMC = this.props.coordType === 'bd09mc';
+        let point: BMapGL.Point;
+
+        if (center instanceof Array) {
+            point = new BMapGL.Point(center[0], center[1]);
+        } else if (center instanceof BMapGL.Point) {
+            point = center;
+        } else {
+            point = new BMapGL.Point(center!.lng, center!.lat);
+        }
+
+        if (isMC) {
+            point = BMapGL.Projection.convertMC2LL(point);
+        }
+        return point;
     }
 
     render() {
