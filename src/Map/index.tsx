@@ -162,13 +162,10 @@ class Map extends Component<MapProps, {}> {
             if (!child) {
                 return null;
             }
-            const isElement: boolean = (typeof child.type !== 'string' && typeof child.type !== 'number');
-            if (child.props.children) {
-                return React.cloneElement(child,
-                isElement ? {map} : {},
-                this.renderChildren(child.props.children, map));
+            if (typeof child.type === 'string' || !child.props) {
+                return child;
             }
-            return React.cloneElement(child, isElement ? {map} : {});
+            return React.cloneElement(child, {map}, this.renderChildren(child.props.children, map));
         });
     }
 

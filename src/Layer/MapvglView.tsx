@@ -94,7 +94,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
                 return;
             }
 
-            if (typeof child.type === 'string' || typeof child.type === 'number') {
+            if (typeof child.type === 'string') {
                 return child;
             } else {
                 return React.cloneElement(child, {
