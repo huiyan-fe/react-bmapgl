@@ -4,7 +4,7 @@
  * @email hdr01@126.com
  */
 
-import { Component } from '../common';
+import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
 
@@ -58,13 +58,11 @@ for (let i = 1; i <= 10; i++) {
 type IconString = 'simple_red' | 'simple_blue' | 'loc_red' | 'loc_blue' | 'start' | 'end' | 'location'
     | 'red1' | 'red2' | 'red3' | 'red4' | 'red5' | 'red6' | 'red7' | 'red8' | 'red9' | 'red10'
     | 'blue1' | 'blue2' | 'blue3' | 'blue4' | 'blue5' | 'blue6' | 'blue7' | 'blue8' | 'blue9' | 'blue10'
-interface MarkerProps {
+interface MarkerProps extends MapChildrenProps {
     /** 标注点的坐标 */
     position: BMapGL.Point;
     /** 标注的Icon图标 */
     icon: BMapGL.Icon | IconString;
-    /** 地图实例，来自父元素`<Map>`的继承 */
-    map: BMapGL.Map;
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
     coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */

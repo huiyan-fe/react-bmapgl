@@ -18,6 +18,7 @@ export {default as Marker} from './Overlay/Marker';
 export {default as Polyline} from './Overlay/Polyline';
 export {default as Polygon} from './Overlay/Polygon';
 export {default as Circle} from './Overlay/Circle';
+export {default as CustomOverlay} from './Overlay/CustomOverlay';
 
 // Layer 图层组件
 export {default as MapvglView} from './Layer/MapvglView';
