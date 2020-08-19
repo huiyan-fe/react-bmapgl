@@ -55,8 +55,9 @@ CustomOverlayDom.prototype.draw = function(){
     if (this._options && this._options.offset) {
         offset = this._options.offset;
     }
-    this._div.style.left = pixel.x - this._div.offsetWidth / 2 + offset.width + 'px';
-    this._div.style.top = pixel.y - this._div.offsetHeight + offset.height + 'px';
+    this._div.style.left = pixel.x + offset.width + 'px';
+    this._div.style.top = pixel.y + offset.height + 'px';
+    this._div.style.transform = 'translate(-50%, -100%)';
 }
 
 export default CustomOverlayDom;
