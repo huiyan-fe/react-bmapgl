@@ -4,7 +4,7 @@
  * @email hdr01@126.com
  */
 
-import {render} from 'react-dom';
+import {render, unmountComponentAtNode} from 'react-dom';
 
 interface CustomOverlayOptions {
     html: React.ReactElement;
@@ -41,6 +41,10 @@ CustomOverlayDom.prototype.initialize = function(map: BMapGL.Map){
     }
     map.getPanes().floatShadow!.appendChild(this._div);
     return this._div;
+}
+
+CustomOverlayDom.prototype.destroy = function(){
+    unmountComponentAtNode(this._div);
 }
 
 CustomOverlayDom.prototype.draw = function(){

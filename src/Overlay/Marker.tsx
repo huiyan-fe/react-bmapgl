@@ -67,8 +67,6 @@ interface MarkerProps extends MapChildrenProps {
     coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */
     autoViewport?: boolean;
-    /** `autoViewport`打开时生效，配置视野的参数 */
-    viewportOptions?: BMapGL.ViewportOptions;
     /** 标注的像素偏移 */
     offset?: BMapGL.Size;
     /** 是否在调用`Map.clearOverlays()`时清除此覆盖物 */
@@ -155,7 +153,7 @@ class Marker extends Component<MarkerProps> {
             this.marker.setTop(!!isTop);
         }
         if (autoViewport && (isDataChanged || isViewportChanged)) {
-            this.props.map.setViewport([point], this.props.viewportOptions || {});
+            this.props.map.setCenter(point);
         }
     }
 
@@ -192,7 +190,7 @@ class Marker extends Component<MarkerProps> {
         map.addOverlay(this.marker);
 
         if (this.props.autoViewport) {
-            map.setViewport([position], this.props.viewportOptions || {});
+            map.setCenter(position);
         }
     }
 

@@ -16,8 +16,6 @@ interface CustomOverlayProps extends MapChildrenProps {
     coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */
     autoViewport?: boolean;
-    /** `autoViewport`打开时生效，配置视野的参数 */
-    viewportOptions?: BMapGL.ViewportOptions;
     /** 标注的像素偏移 */
     offset?: BMapGL.Size;
 };
@@ -53,6 +51,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
 
     destroy() {
         if(this.overlay){
+            this.overlay.destroy();
             this.props.map.removeOverlay(this.overlay);
             // @ts-ignore
             this.overlay = null;
@@ -72,7 +71,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
         map.addOverlay(this.overlay);
 
         if (this.props.autoViewport) {
-            map.setViewport([position], this.props.viewportOptions || {});
+            map.setCenter(position);
         }
     }
 
