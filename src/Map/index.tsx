@@ -135,6 +135,9 @@ class Map extends Component<MapProps, {}> {
             options.mapType = (options.mapType === 'normal' ? BMAP_NORMAL_MAP : options.mapType);
             options.mapType = (options.mapType === 'earth' ? BMAP_EARTH_MAP : options.mapType);
         }
+        if (this.props.mapStyleV2) {
+            options.style = this.props.mapStyleV2;
+        }
         let map = new BMapGL.Map(this.el.current!, options as BMapGL.MapOptions);
 
         this.map = map;
@@ -144,9 +147,6 @@ class Map extends Component<MapProps, {}> {
         let center = new BMapGL.Point(this.props.center.lng, this.props.center.lat);
         map.centerAndZoom(center, this.props.zoom);  // 初始化地图,设置中心点坐标和地图级别
 
-        if (this.props.mapStyleV2) {
-            map.setMapStyleV2(this.props.mapStyleV2);
-        }
         if (this.props.heading) {
             map.setHeading(this.props.heading);
         }
