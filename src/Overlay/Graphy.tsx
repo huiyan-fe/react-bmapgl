@@ -135,13 +135,13 @@ class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS
         let viewport: BMapGL.Viewport;
         if (this.overlay instanceof BMapGL.Polyline || this.overlay instanceof BMapGL.Polygon) {
             let path = this.overlay.getPath();
-            viewport = map.getViewport(path);
+            viewport = map.getViewport(path, this.props.viewportOptions || {});
         } else if (this.overlay instanceof BMapGL.Circle) {
             let bounds = this.overlay.getBounds();
-            viewport = map.getViewport(bounds);
+            viewport = map.getViewport(bounds, this.props.viewportOptions || {});
         }
         if (viewport! && this.props.autoViewport) {
-            map.setViewport(viewport!, this.props.viewportOptions || {});
+            map.setViewport(viewport!);
         }
     }
 

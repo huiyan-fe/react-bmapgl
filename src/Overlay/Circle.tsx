@@ -67,8 +67,8 @@ export default class Circle extends Graphy<CircleProps> {
         }
         if (autoViewport && (isCenterChanged || isRadiusChanged || isViewportChanged)) {
             let bounds = this.overlay.getBounds();
-            let viewport = this.props.map.getViewport(bounds);
-            this.props.map.setViewport(viewport, this.props.viewportOptions || {});
+            let viewport = this.props.map.getViewport(bounds, this.props.viewportOptions || {});
+            this.props.map.setViewport(viewport);
         }
     }
 

@@ -56,8 +56,8 @@ export default class Polyline extends Graphy<PolylineProps> {
         }
         if (autoViewport && (isDataChanged || isViewportChanged)) {
             let path = this.overlay.getPath();
-            let viewport = this.props.map.getViewport(path);
-            this.props.map.setViewport(viewport, this.props.viewportOptions || {});
+            let viewport = this.props.map.getViewport(path, this.props.viewportOptions || {});
+            this.props.map.setViewport(viewport);
         }
     }
 
