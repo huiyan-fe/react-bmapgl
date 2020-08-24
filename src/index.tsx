@@ -18,11 +18,14 @@ export {default as Marker} from './Overlay/Marker';
 export {default as Polyline} from './Overlay/Polyline';
 export {default as Polygon} from './Overlay/Polygon';
 export {default as Circle} from './Overlay/Circle';
+export {default as InfoWindow} from './Overlay/InfoWindow';
+export {default as Label} from './Overlay/Label';
 export {default as CustomOverlay} from './Overlay/CustomOverlay';
 
 // Layer 图层组件
 export {default as MapvglView} from './Layer/MapvglView';
 export {default as MapvglLayer} from './Layer/MapvglLayer';
+export {default as TrafficLayer} from './Layer/TrafficLayer';
 
 // Library 开源工具库
 export {default as DrawingManager} from './Library/DrawingManager';
