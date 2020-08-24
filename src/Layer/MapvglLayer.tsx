@@ -80,7 +80,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
             this.createLayers();
         }
 
-        if (this.props.options.autoViewport) {
+        if (this.props.autoViewport) {
             this.setViewport();
         }
     }
