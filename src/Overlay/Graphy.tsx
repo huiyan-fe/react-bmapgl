@@ -117,7 +117,7 @@ class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS
         if (this.overlay) {
             this.props.map.removeOverlay(this.overlay);
             // @ts-ignore
-            this.overlay = null;
+            this.instance = this.overlay = undefined;
         }
     }
 

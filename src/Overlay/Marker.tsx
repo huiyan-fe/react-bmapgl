@@ -169,7 +169,7 @@ class Marker extends Component<MarkerProps> {
         if(this.marker){
             this.props.map.removeOverlay(this.marker);
             // @ts-ignore
-            this.marker = null;
+            this.instance = this.marker = undefined;
         }
     }
 

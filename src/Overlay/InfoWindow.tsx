@@ -84,7 +84,7 @@ class InfoWindow extends Component<InfoWindowProps> {
         if (this.infoWindow) {
             this.props.map.closeInfoWindow();
             // @ts-ignore
-            this.infoWindow = undefined;
+            this.instance = this.infoWindow = undefined;
         }
     }
 

@@ -54,7 +54,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
             this.overlay.destroy();
             this.props.map.removeOverlay(this.overlay);
             // @ts-ignore
-            this.overlay = null;
+            this.instance = this.overlay = undefined;
         }
     }
 
