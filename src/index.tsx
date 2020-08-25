@@ -26,6 +26,7 @@ export {default as CustomOverlay} from './Overlay/CustomOverlay';
 export {default as MapvglView} from './Layer/MapvglView';
 export {default as MapvglLayer} from './Layer/MapvglLayer';
 export {default as TrafficLayer} from './Layer/TrafficLayer';
+export {default as PanoramaLayer} from './Layer/PanoramaLayer';
 
 // Library 开源工具库
 export {default as DrawingManager} from './Library/DrawingManager';
