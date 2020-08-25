@@ -114,7 +114,7 @@ class DrawingManager extends Component<DrawingManagerProps> {
         if (this.drawingmanager) {
             this.drawingmanager.close();
             // @ts-ignore
-            this.drawingmanager = null;
+            this.instance = this.drawingmanager = undefined;
         }
     }
 

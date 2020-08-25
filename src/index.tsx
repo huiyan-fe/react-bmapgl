@@ -30,6 +30,7 @@ export {default as PanoramaLayer} from './Layer/PanoramaLayer';
 
 // Library 开源工具库
 export {default as DrawingManager} from './Library/DrawingManager';
+export {default as DistanceTool} from './Library/DistanceTool';
 
 // Service 地图服务
 
