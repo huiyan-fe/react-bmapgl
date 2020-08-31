@@ -105,4 +105,4 @@ dist
 
 styleguide/
 dist/
-types/
+# types/
