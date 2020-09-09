@@ -167,7 +167,7 @@ class DrawingManager extends Component<DrawingManagerProps> {
     }
 }
 
-DrawingManager.defaultProps= {
+DrawingManager.defaultProps = {
     isOpen: false,
     enableDrawingTool: true,
     enableCalculate: false,

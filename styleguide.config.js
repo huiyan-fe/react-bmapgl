@@ -42,17 +42,17 @@ module.exports = {
       components: 'src/Library/[A-Z]*.tsx',
       sectionDepth: 1,
     },
+    {
+      name: 'Services',
+      components: 'src/Services/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
     // 下面个目录还没有组件，有了再打开
     // {
     //   name: 'Custom',
     //   components: 'src/Custom/[A-Z]*.tsx',
     //   sectionDepth: 1,
     // },
-    // {
-    //   name: 'Services',
-    //   components: 'src/Services/[A-Z]*.tsx',
-    //   sectionDepth: 1,
-    // }
   ],
   pagePerSection: true,
   ribbon: {

@@ -259,6 +259,8 @@ declare namespace BMapGL {
         dispose(): void;
         onconfirm: (event: { type: string, target: any, item: any }) => void;
         onhighlight: (event: { type: string, target: any, fromitem: any, toitem: any }) => void;
+        addEventListener(event: string, handler: Callback): void;
+        removeEventListener(event: string, handler: Callback): void;
     }
     class TransitRoute {
         constructor(location: Map | Point | string, opts?: TransitRouteOptions);

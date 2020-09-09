@@ -33,6 +33,7 @@ export {default as DrawingManager} from './Library/DrawingManager';
 export {default as DistanceTool} from './Library/DistanceTool';
 
 // Service 地图服务
+export {default as AutoComplete} from './Services/AutoComplete';
 
 
 // Custom 自定义复杂组件
