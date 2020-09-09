@@ -19,6 +19,7 @@ class Example extends React.Component {
 ```
 
 ### 自定义输入框
+通过`input`参数传入自定义的输入框，完成联动。
 ```jsx
 class Example extends React.Component {
 
