@@ -5,7 +5,7 @@ module.exports = {
   title: 'React-BMapGL文档',
   sections: [
     {
-      name: 'Introduction',
+      name: '快速入门',
       content: 'README.md',
     },
     {
@@ -18,38 +18,38 @@ module.exports = {
       href: 'https://github.com/huiyan-fe/react-bmapgl/issues',
     },
     {
-      name: 'Base',
+      name: '基础类',
       components: 'src/Map',
       sectionDepth: 1,
     },
     {
-      name: 'Control',
+      name: '地图控件',
       components: 'src/Control/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: 'Overlay',
+      name: '覆盖物',
       components: 'src/Overlay/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: 'Layer',
+      name: '地图图层',
       components: 'src/Layer/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: 'Library',
+      name: '开源工具库',
       components: 'src/Library/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     {
-      name: 'Services',
+      name: '地图服务',
       components: 'src/Services/[A-Z]*.tsx',
       sectionDepth: 1,
     },
     // 下面个目录还没有组件，有了再打开
     // {
-    //   name: 'Custom',
+    //   name: '自定义组件',
     //   components: 'src/Custom/[A-Z]*.tsx',
     //   sectionDepth: 1,
     // },
