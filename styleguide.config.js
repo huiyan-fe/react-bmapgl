@@ -1,6 +1,5 @@
 const path = require('path')
 const pkg = require('./package.json')
-const { theme, styles } = require('./styleguide.style')
 
 module.exports = {
   title: 'React-BMapGL文档',
@@ -10,8 +9,17 @@ module.exports = {
       content: 'README.md',
     },
     {
+      name: '常见问题',
+      content: 'FAQ.md',
+    },
+    {
+      name: '反馈bug',
+      external: true,
+      href: 'https://github.com/huiyan-fe/react-bmapgl/issues',
+    },
+    {
       name: 'Base',
-      components: ['src/Map'],
+      components: 'src/Map',
       sectionDepth: 1,
     },
     {
@@ -34,16 +42,17 @@ module.exports = {
       components: 'src/Library/[A-Z]*.tsx',
       sectionDepth: 1,
     },
-    {
-      name: 'Custom',
-      components: 'src/Custom/[A-Z]*.tsx',
-      sectionDepth: 1,
-    },
-    {
-      name: 'Services',
-      components: 'src/Services/[A-Z]*.tsx',
-      sectionDepth: 1,
-    }
+    // 下面个目录还没有组件，有了再打开
+    // {
+    //   name: 'Custom',
+    //   components: 'src/Custom/[A-Z]*.tsx',
+    //   sectionDepth: 1,
+    // },
+    // {
+    //   name: 'Services',
+    //   components: 'src/Services/[A-Z]*.tsx',
+    //   sectionDepth: 1,
+    // }
   ],
   pagePerSection: true,
   ribbon: {
@@ -86,8 +95,8 @@ module.exports = {
   },
   previewDelay: 1000,
   skipComponentsWithoutExample: true,
-  theme: theme,
-  styles: styles,
+  theme: './styleguide-components/theme.config.js',
+  styles: './styleguide-components/style.config.js',
   exampleMode: 'expand',
   usageMode: 'expand',
   styleguideComponents: {

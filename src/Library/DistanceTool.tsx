@@ -94,7 +94,7 @@ class DistanceTool extends Component<DistanceToolProps> {
 
         // 如果第一次加载，会执行下面的
         if (!window.BMapGLLib || !BMapGLLib.DistanceTool) {
-            requireScript('//localhost/baidu/github/BMapGLLib/DistanceTool/src/DistanceTool.js')
+            requireScript('//mapopen.bj.bcebos.com/github/BMapGLLib/DistanceTool/src/DistanceTool.js')
                 .then(() => {
                     this.instance = this.distancetool = new BMapGLLib.DistanceTool(map, opts);
                     // 因为是异步加载，所以不会自动注册事件和执行方法，需要手动注册和执行
