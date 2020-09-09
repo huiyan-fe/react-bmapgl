@@ -9,7 +9,7 @@
     "build:doc": "rm -rf styleguide && styleguidist build",
     "deploy": "gh-pages -d styleguide",
     "deploy:bos": "sh upload.sh",
-    "page": "npm run build:doc && npm run deploy",
+    "page": "npm run build:doc && npm run deploy && npm run deploy:bos",
     "prepublish": "npm run build"
   },
   "repository": {
