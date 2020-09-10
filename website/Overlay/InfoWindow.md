@@ -15,6 +15,7 @@ class Example extends React.Component {
       >
         <InfoWindow
           position={new BMapGL.Point(116.40, 39.91)}
+          title="标题"
           text="快速文本信息窗口"
           onClickclose={e => {console.log(e)}}
         />

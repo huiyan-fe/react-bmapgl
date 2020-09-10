@@ -5,7 +5,7 @@
  */
 
 import { Component, MapChildrenProps } from '../common';
-import { requireScript } from '../utils';
+import { requireScript } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
 
 export interface DistanceToolProps extends BMapGL.DistanceToolOptions, MapChildrenProps {

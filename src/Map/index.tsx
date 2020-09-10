@@ -4,6 +4,7 @@
  * @email hdr01@126.com
  */
 
+export {default as MapApiLoaderHOC} from './MapApiLoaderHOC';
 import React, { ReactNode, ReactElement, CSSProperties } from 'react';
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';

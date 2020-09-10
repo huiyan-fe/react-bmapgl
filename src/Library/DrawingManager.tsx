@@ -6,7 +6,7 @@
 
 import React, { CSSProperties } from 'react';
 import { Component, MapChildrenProps } from '../common';
-import { requireScript, requireCss } from '../utils';
+import { requireScript, requireCss } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
 
 export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapChildrenProps {

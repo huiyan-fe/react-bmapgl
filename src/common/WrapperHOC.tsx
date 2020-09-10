@@ -7,7 +7,10 @@
 import shallowEqual from 'shallowequal';
 import Component from './Component';
 
-export type MapInstance = BMapGL.Map | BMapGL.Overlay | BMapGL.Autocomplete | BMapGLLib.DrawingManager | BMapGLLib.DistanceTool;
+export type MapInstance = (
+    BMapGL.Map | BMapGL.Overlay | BMapGL.Autocomplete |
+    BMapGLLib.DrawingManager | BMapGLLib.DistanceTool
+);
 export type Events = string[];
 export type Options = string[];
 export type Methods = {

@@ -6,6 +6,7 @@
 
 // Map 地图核心
 export {default as Map} from './Map';
+export {default as MapApiLoaderHOC} from './Map/MapApiLoaderHOC';
 
 // Control 地图控件
 export {default as MapTypeControl} from './Control/MapTypeControl';
