@@ -2,24 +2,23 @@ module.exports = {
     ComponentsList: {
         item: {
             '& a': {
-                cursor: 'auto !important',
+                cursor: 'default !important',
                 color: '#333 !important',
             },
-            cursor: 'auto',
             fontSize: '14px',
         },
         heading: {
             display: 'block',
             marginRight: '10px !important',
             padding: '10px 4px !important',
-            background: '#eceff0 !important'
+            background: '#eceff0 !important',
+            pointerEvents: 'none !important',
         },
         isChild: {
             '& a:hover': {
                 cursor: 'pointer !important',
                 color: '#6E93DE !important',
             },
-            cursor: 'pointer',
             fontSize: '15px',
             margin: '8px 0'
         },
