@@ -95,12 +95,12 @@ module.exports = {
   },
   previewDelay: 1000,
   skipComponentsWithoutExample: true,
-  theme: './styleguide-components/theme.config.js',
-  styles: './styleguide-components/style.config.js',
+  theme: './rsg-config/theme.config.js',
+  styles: './rsg-config/style.config.js',
   exampleMode: 'expand',
   usageMode: 'expand',
   styleguideComponents: {
-    LogoRenderer: path.join(__dirname, 'styleguide-components/Logo'),
+    LogoRenderer: path.join(__dirname, 'rsg-config/Logo'),
   },
   // Typescript支持
   resolver: require('react-docgen').resolver.findAllComponentDefinitions,
@@ -132,4 +132,11 @@ module.exports = {
       ],
     },
   },
+  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+    if (env === 'production') {
+      // 修改图片等静态资源文件
+      webpackConfig.output.publicPath = '//mapopen.cdn.bcebos.com/github/react-bmapgl/'
+    }
+    return webpackConfig
+  }
 }

@@ -6,6 +6,8 @@
 
 基于百度地图JavaScript GL版API封装的React组件库。如果想要使用旧版的2D地图的话，使用[react-bmap](https://github.com/huiyan-fe/react-bmap)。如果您对使用地图API完全陌生，建议使用这个库之前先了解[百度地图JavaScript GL API](http://lbsyun.baidu.com/index.php?title=jspopularGL)，了解一些地图的基本概念，并申请开发者`ak`。
 
+<br />
+
 ## 文档示例
 官方地址：http://huiyan.baidu.com/github/react-bmapgl/
 

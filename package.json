@@ -6,7 +6,8 @@
   "scripts": {
     "start": "styleguidist server",
     "build": "rm -rf dist && tsc --build tsconfig.build.json",
-    "build:doc": "rm -rf styleguide && styleguidist build",
+    "build:doc": "rm -rf styleguide && styleguidist build && npm run replace",
+    "replace": "node rsg-config/replace.cdn.js",
     "deploy": "gh-pages -d styleguide",
     "deploy:bos": "sh upload.sh",
     "page": "npm run build:doc && npm run deploy && npm run deploy:bos"
