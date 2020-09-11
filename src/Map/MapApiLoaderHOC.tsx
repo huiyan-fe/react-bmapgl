@@ -26,6 +26,8 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
     return class MapApiLoaderHOC extends Component<MapApiLoaderProps, MapApiLoaderState> {
 
         static displayName = `MapApiLoaderHOC(${getDisplayName(WrappedComponent)})`;
+        private apiTimer: number;
+        private loadedTimer: number;
 
         constructor(props: MapApiLoaderProps) {
             super(props);
@@ -50,7 +52,12 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
         }
 
         componentWillUnmount() {
-
+            if (this.apiTimer) {
+                clearTimeout(this.apiTimer);
+            }
+            if (this.loadedTimer) {
+                clearTimeout(this.loadedTimer);
+            }
         }
 
         loadJSAPI() {
@@ -59,7 +66,7 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
                 return;
             }
             if (window['loadingMap']) {
-                setTimeout(() => {
+                this.apiTimer = window.setTimeout(() => {
                     this.loadJSAPI();
                 }, 300);
             } else if (!window['MapApiLoaderCallback']) {
@@ -73,7 +80,7 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
                 script.type = 'text/javascript';
                 script.src = `//api.map.baidu.com/api?type=webgl&v=1.0&ak=${ak}&callback=MapApiLoaderCallback`;
                 document.body.appendChild(script);
-                setTimeout(() => {
+                this.loadedTimer = window.setTimeout(() => {
                     this.handleLoaded();
                 }, 300);
             }
@@ -81,7 +88,7 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
 
         handleLoaded() {
             if (!this.isLoadReady()) {
-                setTimeout(() => {
+                this.loadedTimer = window.setTimeout(() => {
                     this.handleLoaded();
                 }, 300);
                 return;

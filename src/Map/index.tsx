@@ -4,7 +4,6 @@
  * @email hdr01@126.com
  */
 
-export {default as MapApiLoaderHOC} from './MapApiLoaderHOC';
 import React, { ReactNode, ReactElement, CSSProperties } from 'react';
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
@@ -199,3 +198,6 @@ Map.defaultProps = {
  * @visibleName Map 地图
  */
 export default Wrapper(Map, eventsMap, methodsMap);
+
+// 顺便给MapApiLoaderHOC在index中加个入口
+export {default as MapApiLoaderHOC} from './MapApiLoaderHOC';

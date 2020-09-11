@@ -11,6 +11,8 @@
 
 备用地址：https://huiyan-fe.github.io/react-bmapgl/
 
+<br /><br />
+
 ## 开始使用
 
 ### 引入脚本
@@ -60,6 +62,42 @@ function MapComponent(props) {
 }
 ```
 
+<br /><br />
+
+## 异步加载与按需导入
+
+### 异步加载
+通常，如果您的业务场景总需要使用到地图，或者需要创建多个地图实例，我们会建议您在`index.html`模板中加入JSAPI的scirpt标签，因为这种方式对后续开发没有任何限制。  
+但是在某些业务场景下，可能并不一定会使用到地图，且用到的地图功能、组件也相对简单，我们也提供了`MapApiLoaderHOC`高阶组件，实现异步加载的方式。
+```jsx static
+class App extends React.Component {
+  render() {
+    return (
+      <Map
+        style={{ height: 450 }}
+        center={new BMapGL.Point(116.404449, 39.914889)}
+        zoom={12}
+      />
+    )
+  }
+}
+
+export default MapApiLoaderHOC({ak: '您的密钥'})(App)
+```
+
+### 按需导入
+常用的导入方法会直接把整个包导入进来
+```jsx static
+import { Map, Marker, MapvglView, MapvglLayer } from 'react-bmapgl'
+```
+如果希望引入的包体积小一点，所有组件都支持`lodash`风格进行按需导入
+```jsx static
+import Map from 'react-bmapgl/Map'
+import Marker from 'react-bmapgl/Overlay/Marker'
+```
+
+<br /><br />
+
 ## 本地开发
 
 ### 设计思想
@@ -79,7 +117,14 @@ npm start           # 开始运行文档网站
 npm run build:doc   # 文档网站构建编译
 
 npm run build       # 组件库编译，输出 js 和 .d.ts 文件
+
+sh publish.sh       # 发布新npm包
 ```
+
+### 发布npm包
+请勿直接执行`npm publish`，务必用`sh publish.sh`命令来发布包。
+
+<br /><br />
 
 ## 许可证
 [MIT LICENSE](./LICENSE)

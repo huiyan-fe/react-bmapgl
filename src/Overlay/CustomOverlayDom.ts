@@ -21,8 +21,18 @@ function CustomOverlayDom(this: any, point: BMapGL.Point, options: CustomOverlay
     this._point = new BMapGL.Point(point.lng, point.lat);
     this._options = options || {};
     this._html = options.html || '';
+
+    // 这里不用 CustomOverlayDom.prototype = new BMapGL.Overlay() 继承原型链上的方法
+    // 因为在异步加载的场景下，上面的语句调用了BMapGL会导致`BMapGL not defined`的报错
+    // 所以这里用一个魔改的trick方法来继承 BMapGL.Overlay 原型链上的方法
+    // 注意，这样写需要在if判断中剔除要覆盖的函数
+    const extend = new BMapGL.Overlay();
+    for (const key in extend) {
+        if (key !== 'initialize' && key !== 'draw' && key !== 'destroy') {
+            this.__proto__[key] = extend[key];
+        }
+    }
 }
-CustomOverlayDom.prototype = new BMapGL.Overlay();
 
 CustomOverlayDom.prototype.initialize = function(map: BMapGL.Map){
     this._map = map;

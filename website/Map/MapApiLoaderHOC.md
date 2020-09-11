@@ -1,8 +1,8 @@
 ## Demo
 
 ### 基础示例
-```jsx
-import Map from 'react-bmapgl/Map'
+```jsx static
+import Map, {MapApiLoaderHOC} from 'react-bmapgl/Map'
 
 class Example extends React.Component {
   render() {
@@ -11,19 +11,29 @@ class Example extends React.Component {
         style={{ height: 450 }}
         center={new BMapGL.Point(116.404449, 39.914889)}
         zoom={12}
-        heading={0}
-        tilt={40}
-        onClick={e => console.log(e)}
-        enableScrollWheelZoom
       />
     )
   }
 }
 
-function AsyncMap() {
-    return MapApiLoaderHOC({ak: '您的密钥'})(Example)
-}
-// 
+export default MapApiLoaderHOC({ak: '您的密钥'})(Example)
+```
 
-<AsyncMap />
+### 装饰符写法
+如果您使用到了es7的装饰符`@`写法，可以更简单的来使用
+```jsx static
+import Map, {MapApiLoaderHOC} from 'react-bmapgl/Map'
+
+@MapApiLoaderHOC({ak: '您的密钥'})
+export default class Example extends React.Component {
+  render() {
+    return (
+      <Map
+        style={{ height: 450 }}
+        center={new BMapGL.Point(116.404449, 39.914889)}
+        zoom={12}
+      />
+    )
+  }
+}
 ```

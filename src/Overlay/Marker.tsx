@@ -8,52 +8,56 @@ import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
 
-const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
+function defaultIcons() {
+    const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
+    let icons = {
+        'simple_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
+            imageOffset: new BMapGL.Size(454 / 2, 378 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'simple_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
+            imageOffset: new BMapGL.Size(454 / 2, 450 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'loc_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
+            imageOffset: new BMapGL.Size(400 / 2, 378 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'loc_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
+            imageOffset: new BMapGL.Size(400 / 2, 450 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'start': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
+            imageOffset: new BMapGL.Size(400 / 2, 278 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'end': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
+            imageOffset: new BMapGL.Size(450 / 2, 278 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+        'location': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(28 / 2, 40 / 2), {
+            imageOffset: new BMapGL.Size(248 / 2, 466 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        }),
+    }
+    
+    for (let i = 1; i <= 10; i++) {
+        icons['red' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
+            imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 0),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        });
+    }
+    
+    for (let i = 1; i <= 10; i++) {
+        icons['blue' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
+            imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 132 / 2),
+            imageSize: new BMapGL.Size(600 / 2, 600 / 2)
+        });
+    }
 
-let icons = {
-    'simple_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(454 / 2, 378 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'simple_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(454 / 2, 450 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'loc_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
-        imageOffset: new BMapGL.Size(400 / 2, 378 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'loc_blue': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(46 / 2, 70 / 2), {
-        imageOffset: new BMapGL.Size(400 / 2, 450 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'start': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
-        imageOffset: new BMapGL.Size(400 / 2, 278 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'end': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(50 / 2, 80 / 2), {
-        imageOffset: new BMapGL.Size(450 / 2, 278 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
-    'location': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(28 / 2, 40 / 2), {
-        imageOffset: new BMapGL.Size(248 / 2, 466 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    }),
+    return icons;
 }
 
-for (let i = 1; i <= 10; i++) {
-    icons['red' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 0),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    });
-}
-
-for (let i = 1; i <= 10; i++) {
-    icons['blue' + i] = new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
-        imageOffset: new BMapGL.Size(42 / 2 * (i - 1), 132 / 2),
-        imageSize: new BMapGL.Size(600 / 2, 600 / 2)
-    });
-}
 
 type IconString = 'simple_red' | 'simple_blue' | 'loc_red' | 'loc_blue' | 'start' | 'end' | 'location'
     | 'red1' | 'red2' | 'red3' | 'red4' | 'red5' | 'red6' | 'red7' | 'red8' | 'red9' | 'red10'
@@ -111,6 +115,7 @@ const methodsMap: Methods = {
 class Marker extends Component<MarkerProps> {
 
     static defaultProps: MarkerProps | object;
+    private defaultIcons: {[key: string]: BMapGL.Icon};
     marker: BMapGL.Marker;
     options: Options = [
         'offset',
@@ -126,6 +131,7 @@ class Marker extends Component<MarkerProps> {
 
     constructor(props: MarkerProps) {
         super(props);
+        this.defaultIcons = defaultIcons();
     }
 
     componentDidUpdate(prevProps: MarkerProps) {
@@ -218,10 +224,10 @@ class Marker extends Component<MarkerProps> {
         if (icon && icon instanceof BMapGL.Icon) {
             renderIcon = icon;
         } else {
-            if (icon && icons[icon]) {
-                renderIcon = icons[icon];
+            if (icon && this.defaultIcons[icon]) {
+                renderIcon = this.defaultIcons[icon];
             } else {
-                renderIcon = icons.simple_red;
+                renderIcon = this.defaultIcons.simple_red;
             }
         }
         return renderIcon;
