@@ -11,7 +11,7 @@
 
 备用地址：https://huiyan-fe.github.io/react-bmapgl/
 
-<br /><br />
+<br />
 
 ## 开始使用
 
@@ -62,7 +62,7 @@ function MapComponent(props) {
 }
 ```
 
-<br /><br />
+<br />
 
 ## 异步加载与按需导入
 
@@ -96,7 +96,7 @@ import Map from 'react-bmapgl/Map'
 import Marker from 'react-bmapgl/Overlay/Marker'
 ```
 
-<br /><br />
+<br />
 
 ## 本地开发
 
@@ -124,7 +124,7 @@ sh publish.sh       # 发布新npm包
 ### 发布npm包
 请勿直接执行`npm publish`，务必用`sh publish.sh`命令来发布包。
 
-<br /><br />
+<br />
 
 ## 许可证
 [MIT LICENSE](./LICENSE)
