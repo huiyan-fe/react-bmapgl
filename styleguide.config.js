@@ -13,9 +13,10 @@ module.exports = {
       content: 'FAQ.md',
     },
     {
-      name: '反馈bug',
-      external: true,
+      name: '反馈BUG',
       href: 'https://github.com/huiyan-fe/react-bmapgl/issues',
+      external: true,
+      shouldOpenInNewTab: true,
     },
     {
       name: '基础类',
@@ -101,6 +102,8 @@ module.exports = {
   usageMode: 'expand',
   styleguideComponents: {
     LogoRenderer: path.join(__dirname, 'rsg-config/Logo'),
+    LinkRenderer: path.join(__dirname, 'rsg-config/Link'),
+    RibbonRenderer: path.join(__dirname, 'rsg-config/Ribbon'),
   },
   // Typescript支持
   resolver: require('react-docgen').resolver.findAllComponentDefinitions,

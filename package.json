@@ -10,7 +10,7 @@
     "replace": "node rsg-config/replace.cdn.js",
     "deploy": "gh-pages -d styleguide",
     "deploy:bos": "sh upload.sh",
-    "page": "npm run build:doc && npm run deploy && npm run deploy:bos"
+    "page": "npm run build:doc && npm run deploy:bos && npm run deploy"
   },
   "repository": {
     "type": "git",
