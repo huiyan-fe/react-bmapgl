@@ -21,6 +21,30 @@ class Example extends React.Component {
 <Example />
 ```
 
+### 多个实例
+```jsx
+class Example extends React.Component {
+  render() {
+    return (
+      <div style={{display: 'flex', justifyContent: 'space-around'}}>
+        <Map
+          style={{ height: 300, width: '48%' }}
+          center={new BMapGL.Point(116.404449, 39.914889)}
+          zoom={12}
+        />
+        <Map
+          style={{ height: 300, width: '48%' }}
+          center={new BMapGL.Point(116.404449, 39.914889)}
+          zoom={12}
+        />
+      </div>
+    )
+  }
+}
+
+<Example />
+```
+
 ### 个性化地图
 ```jsx
 import whitestyle from '../static/whitestyle'
