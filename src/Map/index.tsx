@@ -124,6 +124,17 @@ class Map extends Component<MapProps, {}> {
         }
     }
 
+    componentWillUnmount() {
+        /**
+         * 销毁地图，当使用 WebGL 渲染地图时，如果确认不再使用该地图实例，则需要
+         * 调用本方法销毁 WebGL 上下文，否则频繁创建新地图实例会导致浏览器报：
+         * too many WebGL context 的警告。
+         */
+        if (this.map) {
+            this.map.destroy();
+        }
+    }
+
     initialize(): void {
         if (this.map) {
             return;

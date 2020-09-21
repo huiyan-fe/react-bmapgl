@@ -108,6 +108,7 @@ declare namespace BMapGL {
         getTileLayer(mapType: string): TileLayer;
         pixelToPoint(pixel: Pixel): Point;
         pointToPixel(point: Point): Pixel;
+        destroy(): void;
         onclick: (event: { type: string, target: any, point: Point, pixel: Pixel, overlay: Overlay }) => void;
         ondblclick: (event: { type: string, target: any, point: Point, pixel: Pixel }) => void;
         onrightclick: (event: { type: string, target: any, point: Point, pixel: Pixel, overlay: Overlay }) => void;
