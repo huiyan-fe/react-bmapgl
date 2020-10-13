@@ -48,12 +48,11 @@ module.exports = {
       components: 'src/Services/[A-Z]*.tsx',
       sectionDepth: 1,
     },
-    // 下面个目录还没有组件，有了再打开
-    // {
-    //   name: '自定义组件',
-    //   components: 'src/Custom/[A-Z]*.tsx',
-    //   sectionDepth: 1,
-    // },
+    {
+      name: '自定义组件',
+      components: 'src/Custom/[A-Z]*.tsx',
+      sectionDepth: 1,
+    },
   ],
   pagePerSection: true,
   ribbon: {
