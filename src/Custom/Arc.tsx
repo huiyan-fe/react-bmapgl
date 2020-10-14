@@ -1,21 +1,21 @@
-import { Component, MapChildrenProps } from '../common';
 // @ts-ignore
-import { LineLayer, LineFlowLayer, PointLayer, TextLayer, View, utilCity, OdCurve } from 'mapvgl';
+import {LineLayer, LineFlowLayer, PointLayer, TextLayer, View, utilCity, OdCurve} from 'mapvgl';
 import shallowEqual from 'shallowequal';
+import {Component, MapChildrenProps} from '../common';
 
-type ArcData = {
+interface ArcData {
     from: {
         city?: string;
         name?: string;
         point?: BMapGL.Point;
-    },
+    };
     to: {
         city?: string;
         name?: string;
         point?: BMapGL.Point;
-    },
+    };
     color?: string;
-};
+}
 
 interface ArcProps extends MapChildrenProps {
     /** 起点、终点的坐标或城市名数据 */
@@ -42,7 +42,7 @@ interface ArcProps extends MapChildrenProps {
     pointOptions?: MapVGL.LayerOptions;
     /** 文字的样式配置，详情参考 [MapVGL文字图层文档](https://mapv.baidu.com/gl/docs/TextLayer.html) */
     textOptions?: MapVGL.LayerOptions;
-};
+}
 
 const DEFAULT_COLOR = 'rgba(60, 50, 200, 0.9)';
 
@@ -103,7 +103,7 @@ export default class Arc extends Component<ArcProps> {
 
     initialize() {
 
-        let map = this.map = this.props.map;
+        const map = this.map = this.props.map;
 
         if (!map) {
             return;
@@ -113,13 +113,13 @@ export default class Arc extends Component<ArcProps> {
             this.createLayers();
         }
 
-        let lineData: MapVGL.GeoJSON[] = [];
-        let pointData: MapVGL.GeoJSON[] = [];
-        let arrowMap: Map<string | undefined, MapVGL.GeoJSON[]> = new Map();
+        const lineData: MapVGL.GeoJSON[] = [];
+        const pointData: MapVGL.GeoJSON[] = [];
+        const arrowMap: Map<string | undefined, MapVGL.GeoJSON[]> = new Map();
 
         if (this.props.data) {
-            let points: BMapGL.Point[] = [];
-            let curve = new OdCurve();
+            const points: BMapGL.Point[] = [];
+            const curve = new OdCurve();
 
             this.props.data.forEach((item: ArcData) => {
                 let start = item.from.point || utilCity.getCenterByCityName(item.from.city);
@@ -129,7 +129,7 @@ export default class Arc extends Component<ArcProps> {
                 curve.setOptions({
                     points: [start, end]
                 });
-                let curveModelData = curve.getPoints();
+                const curveModelData = curve.getPoints();
 
                 if (this.props.coordType === 'bd09mc') {
                     points.push(BMapGL.Projection.convertMC2LL(start));
@@ -147,7 +147,7 @@ export default class Arc extends Component<ArcProps> {
                     color: item.color
                 });
 
-                let arrowData = arrowMap.get(item.color) || [];
+                const arrowData = arrowMap.get(item.color) || [];
                 arrowData.push({
                     geometry: {
                         type: 'LineString',
@@ -211,19 +211,19 @@ export default class Arc extends Component<ArcProps> {
                 this.arrowlayer.setData(arrowMap.get(undefined)!);
                 this.props.arrowOptions && this.arrowlayer.setOptions(this.props.arrowOptions);
             } else {
-                let colorarrowlayer = new LineLayer({
+                const colorarrowlayer = new LineLayer({
                     width: 10,
                     ...this.props.arrowOptions,
                     style: 'arrow',
                     color: 'rgba(255, 255, 255, 0)',
                     styleOptions: {
                         color: color
-                    },
+                    }
                 });
                 this.view.addLayer(colorarrowlayer);
                 colorarrowlayer.setData(arrowMap.get(color));
             }
-        })
+        });
 
         if (this.props.enableAnimation) {
             this.flowlayer.setData(lineData);
@@ -233,20 +233,20 @@ export default class Arc extends Component<ArcProps> {
 
     createLayers() {
         this._createLayer = true;
-        let map = this.map;
+        const map = this.map;
 
-        let view = this.view = new View({
+        const view = this.view = new View({
             map
         });
 
-        let linelayer = this.linelayer = new LineLayer({
+        const linelayer = this.linelayer = new LineLayer({
             blend: 'ligher',
             color: DEFAULT_COLOR,
             width: 4
         });
         view.addLayer(linelayer);
 
-        let arrowlayer = this.arrowlayer = new LineLayer({
+        const arrowlayer = this.arrowlayer = new LineLayer({
             width: 10,
             style: 'arrow',
             color: 'rgba(255, 255, 255, 0)',
@@ -256,20 +256,20 @@ export default class Arc extends Component<ArcProps> {
         });
         view.addLayer(arrowlayer);
 
-        let pointlayer = this.pointlayer = new PointLayer({
+        const pointlayer = this.pointlayer = new PointLayer({
             blend: 'ligher',
             color: DEFAULT_COLOR,
             size: 10
         });
         view.addLayer(pointlayer);
 
-        let textlayer = this.textlayer = new TextLayer({
+        const textlayer = this.textlayer = new TextLayer({
             offset: [0, 15],
             color: '#333'
         });
         view.addLayer(textlayer);
 
-        let flowlayer = this.flowlayer = new LineFlowLayer({
+        const flowlayer = this.flowlayer = new LineFlowLayer({
             color: () => 'rgb(240, 200, 200)',
             interval: 0.4,
             duration: 1,
