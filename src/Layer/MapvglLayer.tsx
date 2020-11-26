@@ -6,6 +6,8 @@
 
 // @ts-ignore
 import * as mapvgl from 'mapvgl';
+// @ts-ignore
+import * as mapvglThree from 'mapvgl/dist/mapvgl.threelayers.min';
 import { Component, MapChildrenProps } from '../common';
 import { MapVGLViewChildrenProps } from './MapvglView';
 
@@ -112,9 +114,10 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     createLayers() {
-        if (mapvgl[this.props.type]) {
+        if (mapvgl[this.props.type] || mapvglThree[this.props.type]) {
             this._createLayer = true;
-            this.layer = new mapvgl[this.props.type](this.props.options);
+            const Constructor = mapvgl[this.props.type] ? mapvgl : mapvglThree;
+            this.layer = new Constructor[this.props.type](this.props.options);
             this.props.view.addLayer(this.layer);
             this.layer.setData(this.props.data);
         } else {
