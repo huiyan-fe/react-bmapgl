@@ -8,10 +8,11 @@ import React, { ReactNode, ReactElement, CSSProperties } from 'react';
 import { Component } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowequal from 'shallowequal';
+import isString from '../utils/isString';
 
 export interface MapProps {
     /** 中心点坐标 */
-    center: BMapGL.Point & string;
+    center: BMapGL.Point | string;
     /** 缩放级别 */
     zoom: BMapGL.ZoomType;
     /** 个性化地图样式 */
@@ -111,9 +112,15 @@ class Map extends Component<MapProps, {}> {
         let {center: preCenter, zoom: preZoom} = prevProps;
         let {center, zoom} = this.props;
 
-        let isCenterChanged: boolean = center && !shallowequal(preCenter, center);
+        let isCenterChanged: boolean = !!center && !shallowequal(preCenter, center);
         let isZoomChanged: boolean = !!(zoom && !shallowequal(preZoom, zoom));
-        let centerPoint = new BMapGL.Point(center.lng, center.lat);
+        let centerPoint: BMapGL.Point | string;
+        if (isString(center)) {
+            centerPoint = center;
+        } else {
+            let {lng, lat} = center as BMapGL.Point;
+            centerPoint = new BMapGL.Point(lng, lat);
+        }
 
         if (isCenterChanged && isZoomChanged) {
             this.map.centerAndZoom(centerPoint, zoom);
@@ -155,8 +162,13 @@ class Map extends Component<MapProps, {}> {
         this.instance = map;
 
         // 正常传入经纬度坐标
-        let center = new BMapGL.Point(this.props.center.lng, this.props.center.lat);
-        map.centerAndZoom(center, this.props.zoom);  // 初始化地图,设置中心点坐标和地图级别
+        if (isString(this.props.center)) {
+            map.centerAndZoom(this.props.center, this.props.zoom);  // 初始化地图,设置中心点坐标和地图级别
+        } else {
+            let {lng, lat} = this.props.center as BMapGL.Point;
+            let center = new BMapGL.Point(lng, lat);
+            map.centerAndZoom(center, this.props.zoom);  // 初始化地图,设置中心点坐标和地图级别
+        }
 
         if (this.props.heading) {
             map.setHeading(this.props.heading);

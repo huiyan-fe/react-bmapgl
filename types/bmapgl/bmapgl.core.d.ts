@@ -72,7 +72,7 @@ declare namespace BMapGL {
         getViewport(view: Point[] | Bounds, viewportOptions?: ViewportOptions): Viewport;
         getZoom(): number;
         getPanorama(): Panorama;
-        centerAndZoom(center: Point, zoom: number): void;
+        centerAndZoom(center: Point | string, zoom: number): void;
         centerAndZoom(city: string): void;
         panTo(center: Point, opts?: PanOptions): void;
         panBy(x: number, y: number, opts?: PanOptions): void;
