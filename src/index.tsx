@@ -4,6 +4,8 @@
  * @email hdr01@126.com
  */
 
+import './baiduTongji';
+
 // Map 地图核心
 export {default as Map} from './Map';
 export {default as MapApiLoaderHOC} from './Map/MapApiLoaderHOC';
@@ -36,9 +38,8 @@ export {default as DistanceTool} from './Library/DistanceTool';
 // Service 地图服务
 export {default as AutoComplete} from './Services/AutoComplete';
 
-
 // Custom 自定义复杂组件
-
+export {default as Arc} from './Custom/Arc';
 
 // 其他
 export * from './utils';
