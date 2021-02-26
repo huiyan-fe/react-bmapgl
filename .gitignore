@@ -103,7 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+link.sh
 upload.sh
 styleguide/
 dist/
+temp/
 # types/

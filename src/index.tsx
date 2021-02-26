@@ -42,4 +42,6 @@ export {default as AutoComplete} from './Services/AutoComplete';
 export {default as Arc} from './Custom/Arc';
 
 // 其他
+// @ts-ignore
+export * as mapvgl from 'mapvgl';
 export * from './utils';
