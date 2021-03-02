@@ -120,6 +120,9 @@ class DrawingManager extends Component<DrawingManagerProps> {
 
     initialize() {
         let map = this.props.map;
+        if (!map) {
+            return;
+        }
 
         this.destroy();
 

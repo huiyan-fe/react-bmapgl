@@ -50,7 +50,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
     }
 
     destroy() {
-        if(this.overlay){
+        if(this.overlay && this.props.map){
             this.overlay.destroy();
             this.props.map.removeOverlay(this.overlay);
             // @ts-ignore
@@ -60,6 +60,9 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
 
     initialize() {
         let map = this.props.map;
+        if (!map) {
+            return;
+        }
 
         this.destroy();
 

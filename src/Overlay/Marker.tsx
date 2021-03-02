@@ -135,6 +135,10 @@ class Marker extends Component<MarkerProps> {
     }
 
     componentDidUpdate(prevProps: MarkerProps) {
+        if (!this.props.map) {
+            this.initialize();
+            return;
+        }
         let {position, icon, autoViewport, offset, isTop} = this.props;
         let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop} = prevProps;
 
@@ -172,7 +176,7 @@ class Marker extends Component<MarkerProps> {
     }
 
     destroy() {
-        if(this.marker){
+        if(this.marker && this.props.map){
             this.props.map.removeOverlay(this.marker);
             // @ts-ignore
             this.instance = this.marker = undefined;
@@ -181,6 +185,9 @@ class Marker extends Component<MarkerProps> {
 
     initialize() {
         let map = this.props.map;
+        if (!map) {
+            return;
+        }
 
         this.destroy();
 

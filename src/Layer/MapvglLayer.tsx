@@ -45,7 +45,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     componentWillUnmount() {
-        if (this.layer) {
+        if (this.layer && this.props.view) {
             this.props.view.removeLayer(this.layer);
             this.layer!.destroy();
             // @ts-ignore
@@ -73,7 +73,8 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
 
     initialize() {
         let map = this.props.map;
-        if (!map) {
+        let view = this.props.view;
+        if (!map || !view) {
             return;
         }
         this.map = map;

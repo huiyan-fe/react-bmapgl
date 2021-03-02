@@ -79,6 +79,9 @@ class DistanceTool extends Component<DistanceToolProps> {
 
     initialize() {
         let map = this.props.map;
+        if (!map) {
+            return;
+        }
 
         this.destroy();
 

@@ -33,6 +33,10 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
     }
 
     componentDidUpdate(prevProps: P) {
+        if (!this.props.map) {
+            this.initialize();
+            return;
+        }
         let {anchor, offset} = this.props;
         let {anchor: preAnchor, offset: preOffset} = prevProps;
 
@@ -55,7 +59,7 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
     }
 
     destroy() {
-        if (this.control) {
+        if (this.control && this.props.map) {
             this.props.map.removeControl(this.control);
             // @ts-ignore
             this.control = null;
