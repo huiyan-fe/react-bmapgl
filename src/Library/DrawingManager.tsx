@@ -49,7 +49,8 @@ export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapCh
 }
 
 const eventsMap: Events = [
-    'overlaycomplete'
+    'overlaycomplete',
+    'overlaycancel'
 ];
 
 const methodsMap: Methods = {
@@ -82,6 +83,7 @@ class DrawingManager extends Component<DrawingManagerProps> {
     drawingmanager: BMapGLLib.DrawingManager;
     options: Options = [
         'isOpen',
+        'drawingMode',
         'enableDrawingTool',
         'enableCalculate',
         'enableSorption',
