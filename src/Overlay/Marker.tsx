@@ -9,7 +9,7 @@ import { default as Wrapper, Events, Options, Methods } from '../common/WrapperH
 import shallowEqual from 'shallowequal';
 
 function defaultIcons() {
-    const defaultIconUrl = '//huiyan.baidu.com/cms/react-bmap/markers_new2x_fbb9e99.png';
+    const defaultIconUrl = '//mapopen.bj.bcebos.com/cms/react-bmap/markers_new2x_fbb9e99.png';
     let icons = {
         'simple_red': new BMapGL.Icon(defaultIconUrl , new BMapGL.Size(42 / 2, 66 / 2), {
             imageOffset: new BMapGL.Size(454 / 2, 378 / 2),
