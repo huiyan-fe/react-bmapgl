@@ -1,6 +1,6 @@
 {
   "name": "react-bmapgl",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "基于百度地图JavaScript GL版API封装的React组件库",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/huiyan-fe/react-bmapgl#readme",
   "dependencies": {
-    "mapvgl": "^1.0.0-beta.108",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "mapvgl": "^1.0.0-beta.114",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "shallowequal": "^1.1.0"
   },
   "devDependencies": {
