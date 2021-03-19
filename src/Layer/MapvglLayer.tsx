@@ -110,7 +110,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
             }
         });
         if (points.length > 0) {
-            this.map.setViewport(points, this.props.options.viewportOptions || {});
+            this.map.setViewport(points, this.props.viewportOptions || {});
         }
     }
 
