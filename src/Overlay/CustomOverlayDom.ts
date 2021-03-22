@@ -65,8 +65,14 @@ CustomOverlayDom.prototype.draw = function(){
     if (this._options && this._options.offset) {
         offset = this._options.offset;
     }
-    this._div.style.left = pixel.x + offset.width + 'px';
-    this._div.style.top = pixel.y + offset.height + 'px';
+    let offW = offset.width;
+    let offH = offset.height;
+    if (this._options && this._options.unit && this._options.unit === 'm') {
+        offW /= map.getZoomUnits();
+        offH /= map.getZoomUnits();
+    }
+    this._div.style.left = pixel.x + offW + 'px';
+    this._div.style.top = pixel.y + offH + 'px';
     this._div.style.transform = 'translate(-50%, -100%)';
 }
 

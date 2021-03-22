@@ -16,8 +16,10 @@ interface CustomOverlayProps extends MapChildrenProps {
     coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */
     autoViewport?: boolean;
-    /** 标注的像素偏移 */
+    /** 标注的偏移值 */
     offset?: BMapGL.Size;
+    /** 标注的偏移单位，可选米或者像素 */
+    unit?: 'm' | 'px';
 };
 
 /**
@@ -28,7 +30,8 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
 
     overlay: BMapGL.Overlay;
     options: Options = [
-        'offset'
+        'offset',
+        'unit'
     ];
 
     constructor(props: CustomOverlayProps) {

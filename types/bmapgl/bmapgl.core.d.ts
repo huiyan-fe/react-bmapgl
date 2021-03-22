@@ -50,6 +50,10 @@ declare namespace BMapGL {
         disablePinchToZoom(): void;
         enableAutoResize(): void;
         disableAutoResize(): void;
+        enableRotate(): void;
+        disableRotate(): void;
+        enableTilt(): void;
+        disableTilt(): void;
         setDefaultCursor(cursor: string): void;
         getDefaultCursor(): string;
         setDraggingCursor(cursor: string): void;

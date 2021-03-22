@@ -31,6 +31,10 @@ export interface MapProps {
     enableScrollWheelZoom?: boolean;
     /** 是否开启双击鼠标缩放 */
     enableDoubleClickZoom?: boolean;
+    /** 是否开启地图旋转功能 */
+    enableRotate?: boolean;
+    /** 是否开启地图倾斜功能 */
+    enableTilt?: boolean;
     /** 是否开启地图可拖拽缩放 */
     enableDragging?: boolean;
     /** 鼠标左键单击事件的回调函数 */
@@ -85,6 +89,8 @@ const methodsMap: Methods = {
     enableInertialDragging: ['enableInertialDragging', 'disableInertialDragging'],
     enableContinuousZoom: ['enableContinuousZoom', 'disableContinuousZoom'],
     enablePinchToZoom: ['enablePinchToZoom', 'disablePinchToZoom'],
+    enableRotate: ['enableRotate', 'disableRotate'],
+    enableTilt: ['enableTilt', 'disableTilt'],
     enableAutoResize: ['enableAutoResize', 'disableAutoResize']
 };
 
