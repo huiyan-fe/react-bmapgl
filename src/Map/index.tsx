@@ -15,6 +15,8 @@ export interface MapProps {
     center: BMapGL.Point | string;
     /** 缩放级别 */
     zoom: BMapGL.ZoomType;
+    /** 地图初始化时的默认配置 */
+    defaultOptions?: object;
     /** 个性化地图样式 */
     mapStyleV2?: BMapGL.MapStyleV2;
     /** 地图最小缩放级别 */
@@ -153,8 +155,9 @@ class Map extends Component<MapProps, {}> {
             return;
         }
 
-        // 创建Map实例
-        let options = this.getOptions();
+        // 创建Map实例，defaultOptions优先级低于指定配置
+        let options = Object.assign({}, this.props.defaultOptions, this.getOptions());
+
         if (options.mapType) {
             options.mapType = (options.mapType === 'normal' ? BMAP_NORMAL_MAP : options.mapType);
             options.mapType = (options.mapType === 'earth' ? BMAP_EARTH_MAP : options.mapType);
@@ -216,6 +219,7 @@ class Map extends Component<MapProps, {}> {
 Map.defaultProps = {
     center: {lng: 116.404449, lat: 39.914889},
     zoom: 12,
+    defaultOptions: {},
     style: {
         position: 'relative',
         height: '350px'
