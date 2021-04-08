@@ -257,6 +257,7 @@ export default class Arc extends Component<ArcProps> {
 
         const pointlayer = this.pointlayer = new PointLayer({
             blend: 'ligher',
+            depthTest: false,
             color: DEFAULT_COLOR,
             size: 10
         });
@@ -264,12 +265,14 @@ export default class Arc extends Component<ArcProps> {
 
         const textlayer = this.textlayer = new TextLayer({
             offset: [0, 15],
+            depthTest: false,
             color: '#333'
         });
         view.addLayer(textlayer);
 
         const flowlayer = this.flowlayer = new LineFlowLayer({
             color: () => 'rgb(240, 200, 200)',
+            polygonOffset: [-2, -2],
             interval: 0.4,
             duration: 1,
             trailLength: 0.8
