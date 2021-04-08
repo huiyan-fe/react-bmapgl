@@ -9,7 +9,7 @@ import * as mapvgl from 'mapvgl';
 // @ts-ignore
 import * as mapvglThree from 'mapvgl/dist/mapvgl.threelayers.min';
 import { Component, MapChildrenProps } from '../common';
-import { MapVGLViewChildrenProps } from './MapvglView';
+import { MapVGLViewChildrenProps, ViewContext } from './MapvglView';
 
 interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
     /** 绘制图层的构造函数名称，注意`区分大小写` */
@@ -33,7 +33,8 @@ interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
 export default class MapvglLayer extends Component<MapvglLayerProps> {
 
     private _createLayer: boolean = false;
-    map: BMapGL.Map;
+    static contextType = ViewContext;
+    view: MapVGL.View;
     layer: MapVGL.Layer;
 
     constructor(props: MapvglLayerProps) {
@@ -45,8 +46,8 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     componentWillUnmount() {
-        if (this.layer && this.props.view) {
-            this.props.view.removeLayer(this.layer);
+        if (this.layer && this.view) {
+            this.view.removeLayer(this.layer);
             this.layer!.destroy();
             // @ts-ignore
             this.layer = null;
@@ -72,12 +73,11 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     initialize() {
-        let map = this.props.map;
-        let view = this.props.view;
+        let map = this.map = this.getMap();
+        let view = this.view = this.props.view || this.context.view;
         if (!map || !view) {
             return;
         }
-        this.map = map;
 
         if (!this._createLayer) {
             this.createLayers();
@@ -119,7 +119,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
             this._createLayer = true;
             const Constructor = mapvgl[this.props.type] ? mapvgl : mapvglThree;
             this.layer = new Constructor[this.props.type](this.props.options);
-            this.props.view.addLayer(this.layer);
+            this.view.addLayer(this.layer);
             this.layer.setData(this.props.data);
         } else {
             console.error(`mapvgl doesn't have layer ${this.props.type}!`)

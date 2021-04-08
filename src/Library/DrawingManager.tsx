@@ -8,6 +8,7 @@ import React, { CSSProperties } from 'react';
 import { Component, MapChildrenProps } from '../common';
 import { requireScript, requireCss } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
+import { MapContext } from '../Map';
 
 export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapChildrenProps {
     /** 是否开启绘制模式，默认不开启 */
@@ -79,6 +80,7 @@ const labelOptions = {
 class DrawingManager extends Component<DrawingManagerProps> {
 
     private el = React.createRef<HTMLDivElement>();
+    static contextType = MapContext;
     static defaultProps: DrawingManagerProps | object;
     drawingmanager: BMapGLLib.DrawingManager;
     options: Options = [
@@ -121,7 +123,7 @@ class DrawingManager extends Component<DrawingManagerProps> {
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

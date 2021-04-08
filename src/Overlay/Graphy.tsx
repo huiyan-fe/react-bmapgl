@@ -7,6 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
+import { MapContext } from '../Map';
 
 export interface GraphyProps extends MapChildrenProps {
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
@@ -61,6 +62,7 @@ const methodsMap: Methods = {
 
 class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS> {
 
+    static contextType = MapContext;
     static defaultProps: GraphyProps | object;
     overlay: BMapGL.Overlay;
     options: Options = [
@@ -115,14 +117,14 @@ class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS
 
     destroy() {
         if (this.overlay) {
-            this.props.map.removeOverlay(this.overlay);
+            this.map.removeOverlay(this.overlay);
             // @ts-ignore
             this.instance = this.overlay = undefined;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

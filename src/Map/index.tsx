@@ -96,11 +96,19 @@ const methodsMap: Methods = {
     enableAutoResize: ['enableAutoResize', 'disableAutoResize']
 };
 
+export interface MapContextProps {
+    map?: BMapGL.Map;
+};
+
+export const MapContext = React.createContext<MapContextProps>({
+    // We provide a default function for Context without provider
+    map: undefined
+});
+
 class Map extends Component<MapProps, {}> {
 
     private el = React.createRef<HTMLDivElement>();
     static defaultProps: MapProps | object;
-    map: BMapGL.Map;
     options: Options = [
         'minZoom',
         'maxZoom',
@@ -207,7 +215,11 @@ class Map extends Component<MapProps, {}> {
                 <div ref={this.el} className={this.props.className} style={{height: '100%'}}>
                     加载地图中...
                 </div>
-                {this.renderChildren(this.props.children as ReactElement, this.map)}
+                    <MapContext.Provider value={{
+                        map: this.map
+                    }}>
+                        {this.renderChildren(this.props.children as ReactElement, this.map)}
+                    </MapContext.Provider>
             </div>
         );
     }

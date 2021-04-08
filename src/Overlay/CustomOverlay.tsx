@@ -8,6 +8,7 @@ import { Component, MapChildrenProps } from '../common';
 import { Options } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
 import CustomOverlayDom from './CustomOverlayDom';
+import { MapContext } from '../Map';
 
 interface CustomOverlayProps extends MapChildrenProps {
     /** 标注点的坐标 */
@@ -28,6 +29,7 @@ interface CustomOverlayProps extends MapChildrenProps {
  */
 export default class CustomOverlay extends Component<CustomOverlayProps> {
 
+    static contextType = MapContext;
     overlay: BMapGL.Overlay;
     options: Options = [
         'offset',
@@ -53,16 +55,16 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
     }
 
     destroy() {
-        if(this.overlay && this.props.map){
+        if(this.overlay && this.map){
             this.overlay.destroy();
-            this.props.map.removeOverlay(this.overlay);
+            this.map.removeOverlay(this.overlay);
             // @ts-ignore
             this.instance = this.overlay = undefined;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

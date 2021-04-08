@@ -53,7 +53,6 @@ const DEFAULT_COLOR = 'rgba(60, 50, 200, 0.9)';
 export default class Arc extends Component<ArcProps> {
 
     private _createLayer: boolean = false;
-    map: BMapGL.Map;
     view: MapVGL.View;
     linelayer: MapVGL.Layer;
     arrowlayer: MapVGL.Layer;
@@ -103,7 +102,7 @@ export default class Arc extends Component<ArcProps> {
 
     initialize() {
 
-        const map = this.map = this.props.map;
+        const map = this.map = this.getMap();
 
         if (!map) {
             return;

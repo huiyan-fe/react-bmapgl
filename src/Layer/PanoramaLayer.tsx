@@ -3,6 +3,7 @@
  * @author hedongran [hdr01@126.com]
  */
 
+import { MapContext } from '../Map';
 import { Component, MapChildrenProps } from '../common';
 
 interface PanoramaLayerProps extends MapChildrenProps {
@@ -14,7 +15,7 @@ interface PanoramaLayerProps extends MapChildrenProps {
  */
 export default class PanoramaLayer extends Component<PanoramaLayerProps> {
 
-    map: BMapGL.Map;
+    static contextType = MapContext;
     tilelayer: BMapGL.TileLayer;
 
     constructor(props: PanoramaLayerProps) {
@@ -35,18 +36,17 @@ export default class PanoramaLayer extends Component<PanoramaLayerProps> {
 
     destroy() {
         if (this.tilelayer) {
-            this.props.map.removeTileLayer(this.tilelayer);
+            this.map.removeTileLayer(this.tilelayer);
             // @ts-ignore
             this.tilelayer = undefined;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }
-        this.map = map;
 
         this.destroy();
 

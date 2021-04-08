@@ -7,6 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { requireScript } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
+import { MapContext } from '../Map';
 
 export interface DistanceToolProps extends BMapGL.DistanceToolOptions, MapChildrenProps {
     /** 默认是否开启测距模式 */
@@ -42,6 +43,7 @@ const methodsMap: Methods = {
 
 class DistanceTool extends Component<DistanceToolProps> {
 
+    static contextType = MapContext;
     static defaultProps: DistanceToolProps | object;
     distancetool: BMapGLLib.DistanceTool;
     options: Options = [
@@ -78,7 +80,7 @@ class DistanceTool extends Component<DistanceToolProps> {
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

@@ -7,6 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
+import { MapContext } from '../Map';
 
 function defaultIcons() {
     const defaultIconUrl = '//mapopen.bj.bcebos.com/cms/react-bmap/markers_new2x_fbb9e99.png';
@@ -114,6 +115,7 @@ const methodsMap: Methods = {
 
 class Marker extends Component<MarkerProps> {
 
+    static contextType = MapContext;
     static defaultProps: MarkerProps | object;
     private defaultIcons: {[key: string]: BMapGL.Icon};
     marker: BMapGL.Marker;
@@ -135,7 +137,7 @@ class Marker extends Component<MarkerProps> {
     }
 
     componentDidUpdate(prevProps: MarkerProps) {
-        if (!this.props.map) {
+        if (!this.map) {
             this.initialize();
             return;
         }
@@ -163,7 +165,7 @@ class Marker extends Component<MarkerProps> {
             this.marker.setTop(!!isTop);
         }
         if (autoViewport && (isDataChanged || isViewportChanged)) {
-            this.props.map.setCenter(point);
+            this.map.setCenter(point);
         }
     }
 
@@ -176,15 +178,15 @@ class Marker extends Component<MarkerProps> {
     }
 
     destroy() {
-        if(this.marker && this.props.map){
-            this.props.map.removeOverlay(this.marker);
+        if(this.marker && this.map){
+            this.map.removeOverlay(this.marker);
             // @ts-ignore
             this.instance = this.marker = undefined;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

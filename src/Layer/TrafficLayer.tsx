@@ -3,6 +3,7 @@
  * @author hedongran [hdr01@126.com]
  */
 
+import { MapContext } from '../Map';
 import { Component, MapChildrenProps } from '../common';
 
 interface TrafficLayerProps extends MapChildrenProps {
@@ -15,7 +16,7 @@ interface TrafficLayerProps extends MapChildrenProps {
 export default class TrafficLayer extends Component<TrafficLayerProps> {
 
     private _showLayer: boolean = false;
-    map: BMapGL.Map;
+    static contextType = MapContext;
 
     constructor(props: TrafficLayerProps) {
         super(props);
@@ -31,17 +32,16 @@ export default class TrafficLayer extends Component<TrafficLayerProps> {
 
     componentWillUnmount() {
         if (this._showLayer) {
-            this.props.map.setTrafficOff();
+            this.map.setTrafficOff();
             this._showLayer = false;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }
-        this.map = map;
 
         if (!this._showLayer) {
             map.setTrafficOn();

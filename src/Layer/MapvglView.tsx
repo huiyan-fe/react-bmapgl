@@ -8,6 +8,7 @@
 import {View, BloomEffect, BrightEffect, BlurEffect} from 'mapvgl';
 import React, { ReactElement, ReactNode, Fragment } from 'react';
 import { Component, MapChildrenProps } from '../common';
+import { MapContext } from '../Map';
 
 interface MapvglViewProps extends MapChildrenProps {
     /** 后处理效果数组 */
@@ -19,14 +20,24 @@ export interface MapVGLViewChildrenProps {
     view: MapVGL.View;
 }
 
+export interface ViewContextProps {
+    map?: BMapGL.Map;
+    view?: MapVGL.View;
+};
+
+export const ViewContext = React.createContext<ViewContextProps>({
+    // We provide a default function for Context without provider
+    view: undefined
+});
+
 /**
  * 该组件将MapVGL的图层管理器使用`react`进行了一层封装。所有`<MapvglLayer>`组件需要作为该组件的子组件，文档参考[MapVGL图层管理器](https://mapv.baidu.com/gl/docs/View.html)
  * @visibleName MapvglView MapVGL图层管理器
  */
 export default class MapvglView extends Component<MapvglViewProps> {
 
+    static contextType = MapContext;
     view: MapVGL.View;
-    map: BMapGL.Map;
 
     constructor(props: MapvglViewProps) {
         super(props);
@@ -52,7 +63,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map || this.view) {
             return;
         }
@@ -108,7 +119,13 @@ export default class MapvglView extends Component<MapvglViewProps> {
     render() {
         return (
             <Fragment>
-                {this.renderChildren(this.props.children as ReactElement)}
+
+                <ViewContext.Provider value={{
+                    map: this.map,
+                    view: this.view
+                }}>
+                    {this.renderChildren(this.props.children as ReactElement)}
+                </ViewContext.Provider>
             </Fragment>
         );
     }

@@ -6,6 +6,7 @@
 
 import { Component, MapChildrenProps } from '../common';
 import shallowEqual from 'shallowequal';
+import { MapContext } from '../Map';
 
 export interface ControlProps extends MapChildrenProps {
     /** 控件的位置，可传下面4个参数： <br/>
@@ -22,6 +23,7 @@ export interface ControlProps extends MapChildrenProps {
 export default class Control<P extends ControlProps, S = {}, SS = any> extends Component<P, S, SS> {
     
     static defaultProps: ControlProps | object;
+    static contextType = MapContext;
     control: BMapGL.Control;
     options: string[] = [
         'anchor',
@@ -33,7 +35,7 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
     }
 
     componentDidUpdate(prevProps: P) {
-        if (!this.props.map) {
+        if (!this.map) {
             this.initialize();
             return;
         }
@@ -59,15 +61,15 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
     }
 
     destroy() {
-        if (this.control && this.props.map) {
-            this.props.map.removeControl(this.control);
+        if (this.control && this.map) {
+            this.map.removeControl(this.control);
             // @ts-ignore
             this.control = null;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }

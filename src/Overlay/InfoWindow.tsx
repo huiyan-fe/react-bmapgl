@@ -7,6 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import { render, unmountComponentAtNode } from 'react-dom';
+import { MapContext } from '../Map';
 
 export interface InfoWindowProps extends MapChildrenProps {
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
@@ -49,6 +50,7 @@ const methodsMap: Methods = {
 
 class InfoWindow extends Component<InfoWindowProps> {
 
+    static contextType = MapContext;
     static defaultProps: InfoWindowProps | object;
     infoWindow: BMapGL.InfoWindow;
     content?: HTMLDivElement;
@@ -82,14 +84,14 @@ class InfoWindow extends Component<InfoWindowProps> {
             unmountComponentAtNode(this.content);
         }
         if (this.infoWindow) {
-            this.props.map.closeInfoWindow();
+            this.map.closeInfoWindow();
             // @ts-ignore
             this.instance = this.infoWindow = undefined;
         }
     }
 
     initialize() {
-        let map = this.props.map;
+        let map = this.map = this.getMap();
         if (!map) {
             return;
         }
