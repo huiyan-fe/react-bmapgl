@@ -55,12 +55,12 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     componentDidUpdate(prevProps: MapvglLayerProps) {
-        if (!this.map || !this.layer) {
+        let {type, data, options, autoViewport} = this.props;
+        let {type: preType, data: preData, options: preOptions, autoViewport: preViewport} = prevProps;
+        if (!this.map || !this.layer || type !== preType) {
             this.initialize();
             return;
         }
-        let {data, options, autoViewport} = this.props;
-        let {data: preData, options: preOptions, autoViewport: preViewport} = prevProps;
         if (JSON.stringify(preOptions) !== JSON.stringify(options)) {
             this.layer.setOptions(options);
         }
@@ -100,12 +100,18 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
             if (data.geometry.type === 'Point') {
                 points.push(getPoint(data.geometry.coordinates));
             } else if (data.geometry.type === 'LineString') {
-                data.geometry.coordinates.map((item: number[]) => {
+                data.geometry.coordinates.forEach((item: number[]) => {
                     points.push(getPoint(item));
                 });
             } else if (data.geometry.type === 'Polygon') {
-                data.geometry.coordinates[0].map((item: number[]) => {
+                data.geometry.coordinates[0].forEach((item: number[]) => {
                     points.push(getPoint(item));
+                });
+            } else if (data.geometry.type === 'MultiPolygon') {
+                data.geometry.coordinates.forEach((polygon: number[][][]) => {
+                    polygon[0].forEach((item: number[]) => {
+                        points.push(getPoint(item));
+                    });
                 });
             }
         });
