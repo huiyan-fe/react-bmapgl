@@ -46,18 +46,18 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
     }
 
     componentWillUnmount() {
-        if (this.layer && this.view) {
-            this.view.removeLayer(this.layer);
-            this.layer!.destroy();
-            // @ts-ignore
-            this.layer = null;
-        }
+        this.destroy();
     }
 
     componentDidUpdate(prevProps: MapvglLayerProps) {
         let {type, data, options, autoViewport} = this.props;
         let {type: preType, data: preData, options: preOptions, autoViewport: preViewport} = prevProps;
-        if (!this.map || !this.layer || type !== preType) {
+        if (!this.map || !this.layer) {
+            this.initialize();
+            return;
+        }
+        if (type !== preType) {
+            this.destroy();
             this.initialize();
             return;
         }
@@ -72,6 +72,16 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
         }
     }
 
+    destroy() {
+        if (this.layer && this.view) {
+            this._createLayer = false;
+            this.view.removeLayer(this.layer);
+            this.layer!.destroy();
+            // @ts-ignore
+            this.layer = null;
+        }
+    }
+
     initialize() {
         let map = this.map = this.getMap();
         let view = this.view = this.props.view || this.context.view;
@@ -82,6 +92,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
         if (!this._createLayer) {
             this.createLayers();
         }
+        this.layer.setData(this.props.data);
 
         if (this.props.autoViewport) {
             this.setViewport();
@@ -126,7 +137,6 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
             const Constructor = mapvgl[this.props.type] ? mapvgl : mapvglThree;
             this.layer = new Constructor[this.props.type](this.props.options);
             this.view.addLayer(this.layer);
-            this.layer.setData(this.props.data);
         } else {
             console.error(`mapvgl doesn't have layer ${this.props.type}!`)
         }

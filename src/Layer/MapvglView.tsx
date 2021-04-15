@@ -67,7 +67,6 @@ export default class MapvglView extends Component<MapvglViewProps> {
         if (!map || this.view) {
             return;
         }
-        this.map = map;
 
         if (!this.view) {
             let effects: any[] = [];
