@@ -24,6 +24,8 @@ interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
     autoViewport?: boolean;
     /** `autoViewport`打开时生效，配置视野的参数 */
     viewportOptions?: BMapGL.ViewportOptions;
+    /** 获取内部方法 */
+    getMethods?: Function;
 };
 
 /**
@@ -39,6 +41,13 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
 
     constructor(props: MapvglLayerProps) {
         super(props);
+
+        const self = this;
+        if (this.props.getMethods) {
+            this.props.getMethods({
+                setViewport: this.setViewport.bind(self)
+            });
+        }
     }
 
     componentDidMount() {
