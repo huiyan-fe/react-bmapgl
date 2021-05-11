@@ -38,7 +38,7 @@ CustomOverlayDom.prototype.initialize = function(map: BMapGL.Map){
     this._map = map;
     this._div = document.createElement("div");
     this._div.style.position = "absolute";
-    this._div.style.zIndex = BMapGL.Overlay.getZIndex(this._point.lat);
+    this._div.style.zIndex = BMapGL.Overlay.getZIndex(this._options.zIndex || this._point.lat);
     render(this._html, this._div);
     this._div.onmousedown = function(event: Event){
         event = event || window.event;

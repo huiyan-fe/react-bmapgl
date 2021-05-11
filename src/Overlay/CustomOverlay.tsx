@@ -19,6 +19,8 @@ interface CustomOverlayProps extends MapChildrenProps {
     autoViewport?: boolean;
     /** 标注的偏移值 */
     offset?: BMapGL.Size;
+    /** 元素的zIndex属性 */
+    zIndex?: number;
     /** 标注的偏移单位，可选米或者像素 */
     unit?: 'm' | 'px';
 };
@@ -32,6 +34,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
     static contextType = MapContext;
     overlay: BMapGL.Overlay;
     options: Options = [
+        'zIndex',
         'offset',
         'unit'
     ];
