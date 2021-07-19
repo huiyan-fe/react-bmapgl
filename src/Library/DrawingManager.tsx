@@ -47,6 +47,10 @@ export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapCh
     onOverlaycomplete?(e: Event, info: object): void;
     /** 挂载元素的样式 */
     style?: CSSProperties;
+    /** 样式的url地址，默认为在线地址 */
+    cssUrl?: string;
+    /** 脚本的url地址，默认为在线地址 */
+    scriptUrl?: string;
 }
 
 const eventsMap: Events = [
@@ -150,10 +154,12 @@ class DrawingManager extends Component<DrawingManagerProps> {
 
         // 如果第一次加载，会执行下面的
         if (!window.BMapGLLib || !BMapGLLib.DrawingManager) {
-            requireCss('//mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.css')
+            let cssUrl = this.props.cssUrl || '//mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.css';
+            let scriptUrl = this.props.scriptUrl || '//mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.js';
+            requireCss(cssUrl)
                 .then(() => {});
 
-            requireScript('//mapopen.bj.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.js')
+            requireScript(scriptUrl)
                 .then(() => {
                     this.instance = this.drawingmanager = new BMapGLLib.DrawingManager(map, opts);
                     // 因为是异步加载，所以不会自动注册事件和执行方法，需要手动注册和执行

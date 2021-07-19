@@ -24,6 +24,8 @@ export interface DistanceToolProps extends BMapGL.DistanceToolOptions, MapChildr
     opacity?: number;
     /** 折线样式 */
     lineStyle?: 'solid' | 'dashed' | 'dotted';
+    /** 脚本的url地址，默认为在线地址 */
+    scriptUrl?: string;
     /** 测距时，每次双击底图结束当前测距折线时，派发事件的接口 */
     onDrawend?(e: Event, info: object): void;
     /** 测距过程中，每次点击底图添加节点时，派发事件的接口 */
@@ -99,7 +101,8 @@ class DistanceTool extends Component<DistanceToolProps> {
 
         // 如果第一次加载，会执行下面的
         if (!window.BMapGLLib || !BMapGLLib.DistanceTool) {
-            requireScript('//mapopen.bj.bcebos.com/github/BMapGLLib/DistanceTool/src/DistanceTool.js')
+            let scriptUrl = this.props.scriptUrl || '//mapopen.bj.bcebos.com/github/BMapGLLib/DistanceTool/src/DistanceTool.js';
+            requireScript(scriptUrl)
                 .then(() => {
                     this.instance = this.distancetool = new BMapGLLib.DistanceTool(map, opts);
                     // 因为是异步加载，所以不会自动注册事件和执行方法，需要手动注册和执行
