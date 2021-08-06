@@ -13,6 +13,7 @@ import { MapContext } from '../Map';
 interface MapvglViewProps extends MapChildrenProps {
     /** 后处理效果数组 */
     effects?: ('bloom' | 'bright' | 'blur')[];
+    preserveDrawingBuffer?: boolean;
 }
 
 export interface MapVGLViewChildrenProps {
@@ -71,6 +72,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
         if (!this.view) {
             let effects: any[] = [];
             let simpleEffects = this.props.effects;
+            let preserveDrawingBuffer = this.props.preserveDrawingBuffer;
             if (simpleEffects && simpleEffects.length) {
                 simpleEffects.forEach(name => {
                     if (name === 'bloom') {
@@ -84,6 +86,7 @@ export default class MapvglView extends Component<MapvglViewProps> {
             }
             this.view = new View({
                 effects,
+                preserveDrawingBuffer,
                 map
             });
         }
