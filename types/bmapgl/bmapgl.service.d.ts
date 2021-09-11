@@ -366,7 +366,7 @@ declare namespace BMapGL {
     }
     class Boundary {
         constructor();
-        get(name: string, callback: (result: string[]) => void): void;
+        get(name: string, callback: (result: { boundaries: string[] }) => void): void;
     }
     class Convertor {
         translate(points: Point[], from: number, to: number, callback: (result: {
