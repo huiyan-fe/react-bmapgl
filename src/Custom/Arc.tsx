@@ -246,6 +246,7 @@ export default class Arc extends Component<ArcProps> {
         view.addLayer(linelayer);
 
         const arrowlayer = this.arrowlayer = new LineLayer({
+            blend: 'ligher',
             width: 10,
             style: 'arrow',
             color: 'rgba(255, 255, 255, 0)',
@@ -271,6 +272,7 @@ export default class Arc extends Component<ArcProps> {
         view.addLayer(textlayer);
 
         const flowlayer = this.flowlayer = new LineFlowLayer({
+            blend: 'ligher',
             color: () => 'rgb(240, 200, 200)',
             polygonOffset: [-2, -2],
             interval: 0.4,

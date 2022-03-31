@@ -159,6 +159,8 @@ declare namespace BMapGL {
         enableHighResolution?: boolean;
         enableAutoResize?: boolean;
         enableMapClick?: boolean;
+        backgroundColor?: number[];
+        displayOptions?: object;
     }
     interface Viewport {
         center: Point;

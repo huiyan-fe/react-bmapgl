@@ -25,6 +25,10 @@ export interface MapProps {
     maxZoom?: BMapGL.ZoomType;
     /** 地图类型，普通地图或地球模式 */
     mapType?: 'normal' | 'earth';
+    /** 地图背景颜色，传rgba格式长度为4的数组 */
+    backgroundColor?: number[];
+    /** 地图显示配置 */
+    displayOptions?: object;
     /** 地图旋转角度 */
     heading?: number;
     /** 地图倾斜角度 */
@@ -112,7 +116,9 @@ class Map extends Component<MapProps, {}> {
     options: Options = [
         'minZoom',
         'maxZoom',
-        'mapType'
+        'mapType',
+        'backgroundColor',
+        'displayOptions'
     ];
 
     constructor(props: MapProps) {
