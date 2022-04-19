@@ -4,7 +4,7 @@
 
 ### 基础展示
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {

@@ -61,14 +61,8 @@ module.exports = {
   },
   // 配置导出路径
   getComponentPathLine(cppath) {
-    const srcDir = path.resolve('src')
-    const dirname = path
-      .dirname(path.relative(srcDir, cppath))
-      .split(path.sep)
-      .join('/')
     const name = path.basename(cppath, '.tsx')
-
-    return `import ${name} from '${path.posix.join(pkg.name, dirname, name)}'`
+    return `import {${name}} from '${pkg.name}'`
   },
   // 配置对应的example 文档
   getExampleFilename(cppath) {

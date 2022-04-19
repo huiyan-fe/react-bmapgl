@@ -2,7 +2,7 @@
 
 ### 简单示例
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class Example extends React.Component {
 ### 绑定属性
 通过将`position`属性和`icon`属性绑定在`state`中，每次`update`时`<Marker>`都会更新，如示例中点击标注查看效果。
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   constructor(props) {

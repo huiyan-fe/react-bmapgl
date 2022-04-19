@@ -94,8 +94,8 @@ import { Map, Marker, MapvglView, MapvglLayer } from 'react-bmapgl'
 ```
 如果希望引入的包体积小一点，所有组件都支持`lodash`风格进行按需导入
 ```jsx static
-import Map from 'react-bmapgl/Map'
-import Marker from 'react-bmapgl/Overlay/Marker'
+import Map from 'react-bmapgl/dist/Map'
+import Marker from 'react-bmapgl/dist/Overlay/Marker'
 ```
 
 <br />
@@ -120,11 +120,11 @@ npm run build:doc   # 文档网站构建编译
 
 npm run build       # 组件库编译，输出 js 和 .d.ts 文件
 
-sh publish.sh       # 发布新npm包
+npm publish         # 发布新npm包
 ```
 
 ### 发布npm包
-请勿直接执行`npm publish`，务必用`sh publish.sh`命令来发布包。
+修改`package.json`版本号后，直接执行`npm publish`
 
 <br />
 

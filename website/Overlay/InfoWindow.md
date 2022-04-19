@@ -3,7 +3,7 @@
 ### 简单文本
 如果信息窗口中需要展示的只是简单的文本信息，可以通过`text`属性直接传入文本，快速生成文本信息窗口。
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {
@@ -30,7 +30,7 @@ class Example extends React.Component {
 ### 复杂文本
 如果信息窗口中想要展示自定义的信息，有复杂的DOM结构，则可以将其直接作为`<InfoWindow>`标签的`children`内容传入。请注意，通过`children`传入的内容优先级会大于`text`，如果同时设置这两个属性，`children`的内容将会覆盖`text`的内容。
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {

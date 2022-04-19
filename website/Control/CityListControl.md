@@ -12,7 +12,7 @@ class Example extends React.Component {
         zoom={12}
         tilt={40}
       >
-        <NavigationControl />
+        <CityListControl />
       </Map>
     )
   }

@@ -4,7 +4,7 @@
 
 ### 基础展示
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 function DOM() {
   return <div className="custom" style={{width: 40, height: 40, background: 'rgba(222, 0, 0, 0.8)'}}>

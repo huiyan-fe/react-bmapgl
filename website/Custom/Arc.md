@@ -21,7 +21,7 @@ type ArcData = {
 
 ### 基础展示
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {
@@ -86,7 +86,7 @@ class Example extends React.Component {
 
 ### 自定义属性
 ```jsx
-import Map from 'react-bmapgl/Map'
+import { Map } from 'react-bmapgl'
 
 class Example extends React.Component {
   render() {
