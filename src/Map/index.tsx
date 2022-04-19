@@ -240,7 +240,7 @@ Map.defaultProps = {
     defaultOptions: {},
     style: {
         position: 'relative',
-        height: '350px'
+        height: '360px'
     }
 };
 
