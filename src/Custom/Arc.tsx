@@ -56,7 +56,7 @@ export default class Arc extends Component<ArcProps> {
     view: MapVGL.View;
     linelayer: MapVGL.Layer;
     arrowlayer: MapVGL.Layer;
-    colorarrowlayer: MapVGL.Layer;
+    colorarrowlayers: MapVGL.Layer[];
     flowlayer: MapVGL.Layer;
     pointlayer: MapVGL.Layer;
     textlayer: MapVGL.Layer;
@@ -94,13 +94,13 @@ export default class Arc extends Component<ArcProps> {
         // @ts-ignore
         this.arrowlayer = undefined;
         // @ts-ignore
-        this.colorarrowlayer = undefined;
-        // @ts-ignore
         this.flowlayer = undefined;
         // @ts-ignore
         this.pointlayer = undefined;
         // @ts-ignore
         this.textlayer = undefined;
+        // @ts-ignore
+        this.colorarrowlayers = [];
     }
 
     initialize() {
@@ -118,6 +118,15 @@ export default class Arc extends Component<ArcProps> {
         const lineData: MapVGL.GeoJSON[] = [];
         const pointData: MapVGL.GeoJSON[] = [];
         const arrowMap: Map<string | undefined, MapVGL.GeoJSON[]> = new Map();
+
+        // 清空箭头匹配颜色的layer
+        if (this.colorarrowlayers && this.colorarrowlayers.length) {
+            for (let i = 0; i < this.colorarrowlayers.length; i++) {
+                const layer = this.colorarrowlayers[i];
+                this.view.removeLayer(layer);
+            }
+        }
+        this.colorarrowlayers = [];
 
         if (this.props.data) {
             const points: BMapGL.Point[] = [];
@@ -212,15 +221,21 @@ export default class Arc extends Component<ArcProps> {
             if (color === undefined) {
                 this.arrowlayer.setData(arrowMap.get(undefined)!);
                 this.props.arrowOptions && this.arrowlayer.setOptions(this.props.arrowOptions);
-            } else {
-                this.props.arrowOptions && this.colorarrowlayer.setOptions({
+            }
+            else {
+                const colorarrowlayer = new LineLayer({
+                    blend: 'lighter',
+                    width: 10,
                     ...this.props.arrowOptions,
+                    style: 'arrow',
                     color: 'rgba(255, 255, 255, 0)',
                     styleOptions: {
                         color: color
                     }
                 });
-                this.colorarrowlayer.setData(arrowMap.get(color)!);
+                this.view.addLayer(colorarrowlayer);
+                colorarrowlayer.setData(arrowMap.get(color));
+                this.colorarrowlayers.push(colorarrowlayer);
             }
         });
 
@@ -255,17 +270,6 @@ export default class Arc extends Component<ArcProps> {
             }
         });
         view.addLayer(arrowlayer);
-
-        const colorarrowlayer = this.colorarrowlayer = new LineLayer({
-            blend: 'lighter',
-            width: 10,
-            style: 'arrow',
-            color: 'rgba(255, 255, 255, 0)',
-            styleOptions: {
-                color: DEFAULT_COLOR
-            }
-        });
-        this.view.addLayer(colorarrowlayer);
 
         const pointlayer = this.pointlayer = new PointLayer({
             blend: 'lighter',
