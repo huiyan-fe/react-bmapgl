@@ -36,7 +36,7 @@ interface ArcProps extends MapChildrenProps {
     lineOptions?: MapVGL.LayerOptions;
     /** 箭头的样式配置，详情参考 [MapVGL线图层文档](https://mapv.baidu.com/gl/docs/LineLayer.html) */
     arrowOptions?: MapVGL.LayerOptions;
-    /** 动画的样式配置，详情参考 [MapVGL蝌蚪线图层文档](https://mapv.baidu.com/gl/docs/LineFlowLayer.html) */
+    /** 动画的样式配置，详情参考 [MapVGL线图层文档](https://mapv.baidu.com/gl/docs/LineLayer.html) */
     animationOptions?: MapVGL.LayerOptions;
     /** 起终点的样式配置，详情参考 [MapVGL点图层文档](https://mapv.baidu.com/gl/docs/PointLayer.html) */
     pointOptions?: MapVGL.LayerOptions;
@@ -56,6 +56,7 @@ export default class Arc extends Component<ArcProps> {
     view: MapVGL.View;
     linelayer: MapVGL.Layer;
     arrowlayer: MapVGL.Layer;
+    colorarrowlayer: MapVGL.Layer;
     flowlayer: MapVGL.Layer;
     pointlayer: MapVGL.Layer;
     textlayer: MapVGL.Layer;
@@ -92,6 +93,8 @@ export default class Arc extends Component<ArcProps> {
         this.linelayer = undefined;
         // @ts-ignore
         this.arrowlayer = undefined;
+        // @ts-ignore
+        this.colorarrowlayer = undefined;
         // @ts-ignore
         this.flowlayer = undefined;
         // @ts-ignore
@@ -210,17 +213,14 @@ export default class Arc extends Component<ArcProps> {
                 this.arrowlayer.setData(arrowMap.get(undefined)!);
                 this.props.arrowOptions && this.arrowlayer.setOptions(this.props.arrowOptions);
             } else {
-                const colorarrowlayer = new LineLayer({
-                    width: 10,
+                this.props.arrowOptions && this.colorarrowlayer.setOptions({
                     ...this.props.arrowOptions,
-                    style: 'arrow',
                     color: 'rgba(255, 255, 255, 0)',
                     styleOptions: {
                         color: color
                     }
                 });
-                this.view.addLayer(colorarrowlayer);
-                colorarrowlayer.setData(arrowMap.get(color));
+                this.colorarrowlayer.setData(arrowMap.get(color)!);
             }
         });
 
@@ -239,14 +239,14 @@ export default class Arc extends Component<ArcProps> {
         });
 
         const linelayer = this.linelayer = new LineLayer({
-            blend: 'ligher',
+            blend: 'lighter',
             color: DEFAULT_COLOR,
             width: 4
         });
         view.addLayer(linelayer);
 
         const arrowlayer = this.arrowlayer = new LineLayer({
-            blend: 'ligher',
+            blend: 'lighter',
             width: 10,
             style: 'arrow',
             color: 'rgba(255, 255, 255, 0)',
@@ -256,8 +256,19 @@ export default class Arc extends Component<ArcProps> {
         });
         view.addLayer(arrowlayer);
 
+        const colorarrowlayer = this.colorarrowlayer = new LineLayer({
+            blend: 'lighter',
+            width: 10,
+            style: 'arrow',
+            color: 'rgba(255, 255, 255, 0)',
+            styleOptions: {
+                color: DEFAULT_COLOR
+            }
+        });
+        this.view.addLayer(colorarrowlayer);
+
         const pointlayer = this.pointlayer = new PointLayer({
-            blend: 'ligher',
+            blend: 'lighter',
             depthTest: false,
             color: DEFAULT_COLOR,
             size: 10
@@ -271,10 +282,11 @@ export default class Arc extends Component<ArcProps> {
         });
         view.addLayer(textlayer);
 
-        const flowlayer = this.flowlayer = new LineFlowLayer({
-            blend: 'ligher',
+        const flowlayer = this.flowlayer = new LineLayer({
+            blend: 'lighter',
             color: () => 'rgb(240, 200, 200)',
-            polygonOffset: [-2, -2],
+            width: 2,
+            animation: true,
             interval: 0.4,
             duration: 1,
             trailLength: 0.8
