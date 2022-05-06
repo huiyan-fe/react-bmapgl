@@ -3,7 +3,7 @@
  * @author hedongran [hdr01@126.com]
  */
 
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 import { Component, MapChildrenProps } from '../common';
 
 interface TrafficLayerProps extends MapChildrenProps {

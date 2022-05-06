@@ -7,7 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { requireScript } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 export interface DistanceToolProps extends BMapGL.DistanceToolOptions, MapChildrenProps {
     /** 默认是否开启测距模式 */

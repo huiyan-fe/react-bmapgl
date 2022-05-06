@@ -7,7 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 function defaultIcons() {
     const defaultIconUrl = '//mapopen.bj.bcebos.com/cms/react-bmap/markers_new2x_fbb9e99.png';

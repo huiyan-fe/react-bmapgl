@@ -7,7 +7,7 @@
 import './baiduTongji';
 
 // Map 地图核心
-export {default as Map} from './Map';
+export {default as Map} from './Map/Map';
 export {default as MapApiLoaderHOC} from './Map/MapApiLoaderHOC';
 
 // Control 地图控件

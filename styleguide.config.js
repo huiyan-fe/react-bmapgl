@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       name: '基础类',
-      components: ['src/Map/index.tsx', 'src/Map/MapApiLoaderHOC.tsx'],
+      components: ['src/Map/Map.tsx', 'src/Map/MapApiLoaderHOC.tsx'],
       sectionDepth: 1,
     },
     {

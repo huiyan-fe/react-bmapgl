@@ -6,7 +6,7 @@
 
 import { Component, MapChildrenProps } from '../common';
 import shallowEqual from 'shallowequal';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 export interface ControlProps extends MapChildrenProps {
     /** 控件的位置，可传下面4个参数： <br/>

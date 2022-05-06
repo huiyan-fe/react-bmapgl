@@ -7,7 +7,7 @@
 import { Component, MapChildrenProps } from '../common';
 import { default as Wrapper, Events, Options, Methods } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 export interface GraphyProps extends MapChildrenProps {
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */

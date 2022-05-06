@@ -8,7 +8,7 @@ import { Component, MapChildrenProps } from '../common';
 import { Options } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
 import CustomOverlayDom from './CustomOverlayDom';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 interface CustomOverlayProps extends MapChildrenProps {
     /** 标注点的坐标 */

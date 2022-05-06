@@ -8,7 +8,7 @@
 import {View, BloomEffect, BrightEffect, BlurEffect} from 'mapvgl';
 import React, { ReactElement, ReactNode, Fragment } from 'react';
 import { Component, MapChildrenProps } from '../common';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 interface MapvglViewProps extends MapChildrenProps {
     /** 后处理效果数组 */

@@ -8,7 +8,7 @@ import React, { CSSProperties } from 'react';
 import { Component, MapChildrenProps } from '../common';
 import { requireScript, requireCss } from '../utils/requireScript';
 import { default as Wrapper, registerEvents, toggleMethods, Events, Options, Methods } from '../common/WrapperHOC';
-import { MapContext } from '../Map';
+import { MapContext } from '../Map/Map';
 
 export interface DrawingManagerProps extends BMapGL.DrawingManagerOptions, MapChildrenProps {
     /** 是否开启绘制模式，默认不开启 */
