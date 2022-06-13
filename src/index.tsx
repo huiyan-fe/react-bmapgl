@@ -15,6 +15,7 @@ export {default as MapTypeControl} from './Control/MapTypeControl';
 export {default as ScaleControl} from './Control/ScaleControl';
 export {default as ZoomControl} from './Control/ZoomControl';
 export {default as NavigationControl} from './Control/NavigationControl';
+export {default as CityListControl} from './Control/CityListControl';
 
 // Overlay 覆盖物组件
 export {default as Marker} from './Overlay/Marker';
