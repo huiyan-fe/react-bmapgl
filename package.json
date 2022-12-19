@@ -1,6 +1,6 @@
 {
   "name": "react-bmapgl",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "基于百度地图JavaScript GL版API封装的React组件库",
   "main": "dist/index.js",
   "types": "types/bmapgl/index.d.ts",
