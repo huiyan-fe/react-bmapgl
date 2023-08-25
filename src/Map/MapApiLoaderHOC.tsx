@@ -7,7 +7,10 @@ import React, { Component } from 'react';
 import getDisplayName from '../utils/getDisplayName';
 
 interface WrapperHocProps {
+    /** 开放平台申请的ak */
     ak: string;
+    /** dugis booter的启动地址，非必填 */
+    booter?: string;
 }
 
 interface MapApiLoaderProps {
@@ -76,9 +79,14 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
                     delete window['MapApiLoaderCallback'];
                 };
                 const ak = hocProps.ak;
+                const booter = hocProps.booter;
                 const script = document.createElement('script');
                 script.type = 'text/javascript';
                 script.src = `//api.map.baidu.com/api?type=webgl&v=1.0&ak=${ak}&callback=MapApiLoaderCallback`;
+                if (booter) {
+                    window['BMAP_AUTHENTIC_KEY'] = ak;
+                    script.src = booter;
+                }
                 document.body.appendChild(script);
                 this.loadedTimer = window.setTimeout(() => {
                     this.handleLoaded();
