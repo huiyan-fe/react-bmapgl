@@ -58,7 +58,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
     }
 
     destroy() {
-        if(this.overlay && this.map){
+        if(this.overlay && this.map && !this.map._destroyed){
             this.overlay.destroy();
             this.map.removeOverlay(this.overlay);
             // @ts-ignore

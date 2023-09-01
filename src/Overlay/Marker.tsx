@@ -178,7 +178,7 @@ class Marker extends Component<MarkerProps> {
     }
 
     destroy() {
-        if(this.marker && this.map){
+        if(this.marker && this.map && !this.map._destroyed){
             this.map.removeOverlay(this.marker);
             // @ts-ignore
             this.instance = this.marker = undefined;

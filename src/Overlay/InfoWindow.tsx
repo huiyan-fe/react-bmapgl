@@ -83,7 +83,7 @@ class InfoWindow extends Component<InfoWindowProps> {
         if (this.content) {
             unmountComponentAtNode(this.content);
         }
-        if (this.infoWindow) {
+        if (this.infoWindow && this.map && !this.map._destroyed) {
             this.map.closeInfoWindow();
             // @ts-ignore
             this.instance = this.infoWindow = undefined;

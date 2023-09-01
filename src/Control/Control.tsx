@@ -61,7 +61,7 @@ export default class Control<P extends ControlProps, S = {}, SS = any> extends C
     }
 
     destroy() {
-        if (this.control && this.map) {
+        if (this.control && this.map && !this.map._destroyed) {
             this.map.removeControl(this.control);
             // @ts-ignore
             this.control = null;

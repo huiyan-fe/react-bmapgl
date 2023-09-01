@@ -35,7 +35,7 @@ export default class PanoramaLayer extends Component<PanoramaLayerProps> {
     }
 
     destroy() {
-        if (this.tilelayer) {
+        if (this.tilelayer && this.map && !this.map._destroyed) {
             this.map.removeTileLayer(this.tilelayer);
             // @ts-ignore
             this.tilelayer = undefined;

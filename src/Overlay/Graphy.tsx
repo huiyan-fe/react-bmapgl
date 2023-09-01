@@ -116,7 +116,7 @@ class Graphy<P extends GraphyProps, S = {}, SS = any> extends Component<P, S, SS
     }
 
     destroy() {
-        if (this.overlay) {
+        if (this.overlay && this.map && !this.map._destroyed) {
             this.map.removeOverlay(this.overlay);
             // @ts-ignore
             this.instance = this.overlay = undefined;

@@ -96,7 +96,7 @@ class Label extends Component<LabelProps> {
     }
 
     destroy() {
-        if (this.label) {
+        if (this.label && this.map && !this.map._destroyed) {
             this.map.removeOverlay(this.label);
             // @ts-ignore
             this.instance = this.label = undefined;

@@ -33,6 +33,7 @@ SOFTWARE.
 /// <reference path="./bmapgl.panorama.d.ts" />
 declare namespace BMapGL {
     class Map {
+        [x: string]: any;
         constructor(container: string | HTMLElement, opts?: MapOptions);
         enableDragging(): void;
         disableDragging(): void;

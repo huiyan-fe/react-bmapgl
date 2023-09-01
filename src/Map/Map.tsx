@@ -161,6 +161,8 @@ class Map extends Component<MapProps, {}> {
          */
         if (this.map) {
             this.map.destroy();
+            // @ts-ignore
+            this.instance = this.map = undefined;
         }
     }
 
