@@ -147,7 +147,7 @@ class Marker extends Component<MarkerProps> {
         let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop,rotation:preRotation} = prevProps;
 
         let isDataChanged: boolean = position && !shallowEqual(position, prePosition);
-        let isRotationChanged: boolean = position && !shallowEqual(rotation, preRotation);
+        let isRotationChanged: boolean = rotation && !shallowEqual(rotation, preRotation);
         let isIconChanged: boolean = !!(icon && !shallowEqual(icon, preIcon));
         let isViewportChanged: boolean = !shallowEqual(autoViewport, preViewport);
         let isOffsetChanged: boolean = !!(offset && !shallowEqual(offset, preOffset));
