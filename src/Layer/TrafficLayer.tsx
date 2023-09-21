@@ -31,7 +31,7 @@ export default class TrafficLayer extends Component<TrafficLayerProps> {
     }
 
     componentWillUnmount() {
-        if (this._showLayer) {
+        if (this._showLayer && this.map && !this.map._destroyed) {
             this.map.setTrafficOff();
             this._showLayer = false;
         }
