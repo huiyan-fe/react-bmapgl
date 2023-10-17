@@ -363,6 +363,16 @@ declare namespace BMapGL {
     interface GeolocationResult {
         point: Point;
         accuracy: number;
+        address: AddressComponent;
+        // https://mapopen-pub-jsapi.bj.bcebos.com/jsapi/reference/jsapi_webgl_1_0.html#a8b41
+        // 以下为实际返回，但文档中不存在
+        latitude: number;
+        longitude: number;
+        altitude: null;
+        altitudeAccuracy: null;
+        heading: null;
+        speed: null;
+        timestamp: null;
     }
     class Boundary {
         constructor();
