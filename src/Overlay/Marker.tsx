@@ -66,6 +66,8 @@ type IconString = 'simple_red' | 'simple_blue' | 'loc_red' | 'loc_blue' | 'start
 interface MarkerProps extends MapChildrenProps {
     /** 标注点的坐标 */
     position: BMapGL.Point;
+    /*旋转角度*/
+    rotation:Number;
     /** 标注的Icon图标 */
     icon: BMapGL.Icon | IconString;
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
@@ -141,10 +143,11 @@ class Marker extends Component<MarkerProps> {
             this.initialize();
             return;
         }
-        let {position, icon, autoViewport, offset, isTop} = this.props;
-        let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop} = prevProps;
+        let {position, icon, autoViewport, offset, isTop,rotation} = this.props;
+        let {position: prePosition, icon: preIcon, autoViewport: preViewport, offset: preOffset, isTop: preTop,rotation:preRotation} = prevProps;
 
         let isDataChanged: boolean = position && !shallowEqual(position, prePosition);
+        let isRotationChanged: boolean = rotation && !shallowEqual(rotation, preRotation);
         let isIconChanged: boolean = !!(icon && !shallowEqual(icon, preIcon));
         let isViewportChanged: boolean = !shallowEqual(autoViewport, preViewport);
         let isOffsetChanged: boolean = !!(offset && !shallowEqual(offset, preOffset));
@@ -154,6 +157,9 @@ class Marker extends Component<MarkerProps> {
         if (isDataChanged) {
             this.marker.setPosition(point);
         }
+        if (isRotationChanged) {
+            this.marker.setRotation(rotation);
+          }
         if (isIconChanged) {
             let renderIcon: BMapGL.Icon = this.parseIcon(icon);
             this.marker.setIcon(renderIcon);
