@@ -158,7 +158,7 @@ class Marker extends Component<MarkerProps> {
             this.marker.setPosition(point);
         }
         if (isRotationChanged) {
-            this.marker.setRotation(rotation);
+            this.marker.setRotation(Number(rotation));
           }
         if (isIconChanged) {
             let renderIcon: BMapGL.Icon = this.parseIcon(icon);

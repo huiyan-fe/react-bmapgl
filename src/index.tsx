@@ -16,6 +16,7 @@ export {default as ScaleControl} from './Control/ScaleControl';
 export {default as ZoomControl} from './Control/ZoomControl';
 export {default as NavigationControl} from './Control/NavigationControl';
 export {default as CityListControl} from './Control/CityListControl';
+export {default as PanoramaControl} from './Control/PanoramaControl';
 
 // Overlay 覆盖物组件
 export {default as Marker} from './Overlay/Marker';

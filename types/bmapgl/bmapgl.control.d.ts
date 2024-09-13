@@ -128,8 +128,12 @@ declare namespace BMapGL {
         locationIcon?: Icon;
     }
     type StatusCode = number;
+    interface PanoramaControlOptions {
+        anchor?: ControlAnchor;
+        offset?: Size;
+    }
     class PanoramaControl extends Control {
-        constructor();
+        constructor(opts?: PanoramaControlOptions);
     }
     class ZoomControl extends Control {
         constructor(opts?: ZoomControlOptions);
