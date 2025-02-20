@@ -4,12 +4,18 @@
  * @email hdr01@126.com
  */
 
+
+
 import {render, unmountComponentAtNode} from 'react-dom';
+
+declare const BMapGL: any;
 
 interface CustomOverlayOptions {
     html: React.ReactElement;
     offset?: BMapGL.Size;
     onClick(e: Event): void;
+    style?: { zIndex?: string };
+    stopPropagation?: boolean;
 }
 
 /**
@@ -36,21 +42,29 @@ function CustomOverlayDom(this: any, point: BMapGL.Point, options: CustomOverlay
 
 CustomOverlayDom.prototype.initialize = function(map: BMapGL.Map){
     this._map = map;
-    this._div = document.createElement("div");
-    this._div.style.position = "absolute";
-    this._div.style.zIndex = this._options.zIndex || BMapGL.Overlay.getZIndex(this._point.lat);
-    render(this._html, this._div);
-    this._div.onmousedown = function(event: Event){
-        event = event || window.event;
-        if (event.preventDefault){
-            event.preventDefault();
-        } else {
-            event.returnValue = false;
-        }
-        return false;
+    let div = this._div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.zIndex = this._options.style?.zIndex || '0';
+    div.innerHTML = this._html;
+
+    // 添加事件处理
+    if (this._options.stopPropagation) {
+        div.addEventListener('mousedown', (e: MouseEvent) => {
+            e.stopPropagation();
+        });
+        div.addEventListener('click', (e: MouseEvent) => {
+            e.stopPropagation();
+        });
+        div.addEventListener('dblclick', (e: MouseEvent) => {
+            e.stopPropagation();
+        });
+        div.addEventListener('mousemove', (e: MouseEvent) => {
+            e.stopPropagation();
+        });
     }
-    map.getPanes().floatShadow!.appendChild(this._div);
-    return this._div;
+
+    map.getPanes().floatPane.appendChild(div);
+    return div;
 }
 
 CustomOverlayDom.prototype.destroy = function(){

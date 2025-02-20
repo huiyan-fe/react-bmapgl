@@ -4,11 +4,16 @@
  * @email hdr01@126.com
  */
 
+
+
 import { Component, MapChildrenProps } from '../common';
 import { Options } from '../common/WrapperHOC';
 import shallowEqual from 'shallowequal';
-import CustomOverlayDom from './CustomOverlayDom';
 import { MapContext } from '../Map/Map';
+import { render, unmountComponentAtNode } from 'react-dom';
+
+// 确保 BMapGL 类型可用
+declare const BMapGL: any;
 
 interface CustomOverlayProps extends MapChildrenProps {
     /** 标注点的坐标 */
@@ -23,6 +28,9 @@ interface CustomOverlayProps extends MapChildrenProps {
     zIndex?: number;
     /** 标注的偏移单位，可选米或者像素 */
     unit?: 'm' | 'px';
+    /** 是否阻止事件冒泡 */
+    stopPropagation?: boolean;
+    children: React.ReactElement;
 };
 
 /**
@@ -30,17 +38,16 @@ interface CustomOverlayProps extends MapChildrenProps {
  * @visibleName CustomOverlay 自定义覆盖物
  */
 export default class CustomOverlay extends Component<CustomOverlayProps> {
-
     static contextType = MapContext;
-    overlay: BMapGL.Overlay;
-    options: Options = [
-        'zIndex',
-        'offset',
-        'unit'
-    ];
+    
+    private overlay: any;
+    private container: HTMLDivElement | null = null;
+    
+    options: Options = ['zIndex', 'offset', 'unit'];
 
     constructor(props: CustomOverlayProps) {
         super(props);
+        this.initialize = this.initialize.bind(this);
     }
 
     componentDidUpdate(prevProps: CustomOverlayProps) {
@@ -58,30 +65,91 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
     }
 
     destroy() {
-        if(this.overlay && this.map && !this.map._destroyed){
-            this.overlay.destroy();
+        if (this.overlay && this.map && !this.map._destroyed) {
+            if (this.container) {
+                unmountComponentAtNode(this.container);
+            }
             this.map.removeOverlay(this.overlay);
-            // @ts-ignore
-            this.instance = this.overlay = undefined;
+            this.overlay = null;
+            this.container = null;
         }
     }
 
+    createOverlay() {
+        const CustomOverlay = function(this: any) {
+            this._container = null;
+            this._position = null;
+            this._offset = null;
+            this._zIndex = 0;
+            this._unit = 'px';
+        };
+
+        CustomOverlay.prototype = new BMapGL.Overlay();
+
+        CustomOverlay.prototype.initialize = (map: BMapGL.Map) => {
+            this.container = document.createElement('div');
+            this.container.style.position = 'absolute';
+            this.container.style.zIndex = (this.props.zIndex || 0).toString();
+            
+            if (this.props.children) {
+                render(this.props.children, this.container);
+            }
+            
+            const pane = map.getPanes().floatPane;
+            if (pane) {
+                pane.appendChild(this.container);
+            }
+
+            this.container.addEventListener('mousedown', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
+            this.container.addEventListener('click', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
+            this.container.addEventListener('dblclick', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
+            this.container.addEventListener('mousemove', (e: MouseEvent) => {
+                e.stopPropagation();
+            });
+
+            return this.container;
+        };
+
+        CustomOverlay.prototype.draw = () => {
+            if (!this.container || !this.overlay) return;
+
+            const position = this.parsePosition(this.props.position);
+            const pixel = this.map.pointToOverlayPixel(position);
+            const offset = this.props.offset || new BMapGL.Size(0, 0);
+
+            let offsetX = offset.width;
+            let offsetY = offset.height;
+
+            if (this.props.unit === 'm') {
+                offsetX /= this.map.getZoomUnits();
+                offsetY /= this.map.getZoomUnits();
+            }
+
+            this.container.style.left = `${pixel.x}px`;
+            this.container.style.top = `${pixel.y}px`;
+            this.container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        };
+
+        return new (CustomOverlay as any)();
+    }
+
     initialize() {
-        let map = this.map = this.getMap();
-        if (!map) {
-            return;
-        }
+        const map = this.map = this.getMap();
+        if (!map) return;
 
         this.destroy();
 
-        let options = this.getOptions();
-        options.html = this.props.children;
-        let position = this.parsePosition(this.props.position);
-        // @ts-ignore
-        this.instance = this.overlay = new CustomOverlayDom(position, options);
+        this.overlay = this.createOverlay();
         map.addOverlay(this.overlay);
 
         if (this.props.autoViewport) {
+            const position = this.parsePosition(this.props.position);
             map.setCenter(position);
         }
     }
@@ -90,12 +158,12 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
         const isMC = this.props.coordType === 'bd09mc';
         let point: BMapGL.Point;
 
-        if (position instanceof Array) {
+        if (Array.isArray(position)) {
             point = new BMapGL.Point(position[0], position[1]);
         } else if (position instanceof BMapGL.Point) {
             point = position;
         } else {
-            point = new BMapGL.Point(position!.lng, position!.lat);
+            point = new BMapGL.Point(position.lng, position.lat);
         }
 
         if (isMC) {
@@ -104,8 +172,7 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
         return point;
     }
 
-    render(){
+    render() {
         return null;
     }
-
 }
