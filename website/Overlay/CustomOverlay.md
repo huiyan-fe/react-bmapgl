@@ -20,7 +20,7 @@ class Example extends React.Component {
         zoom={12}
         tilt={40}
       >
-        <CustomOverlay position={new BMapGL.Point(116.35, 39.88)}>
+        <CustomOverlay point={new BMapGL.Point(116.35, 39.88)}>
           <DOM />
         </CustomOverlay>
       </Map>
