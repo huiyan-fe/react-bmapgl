@@ -9,9 +9,7 @@
 <br />
 
 ## 文档示例
-官方地址：http://huiyan.baidu.com/github/react-bmapgl/
-
-备用地址：https://huiyan-fe.github.io/react-bmapgl/
+官方地址：https://huiyan-fe.github.io/react-bmapgl/
 
 <br />
 

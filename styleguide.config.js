@@ -131,7 +131,7 @@ module.exports = {
   dangerouslyUpdateWebpackConfig(webpackConfig, env) {
     if (env === 'production') {
       // 修改图片等静态资源文件
-      webpackConfig.output.publicPath = '//mapopen.cdn.bcebos.com/github/react-bmapgl/'
+      // webpackConfig.output.publicPath = '//mapopen.cdn.bcebos.com/github/react-bmapgl/'
     }
     return webpackConfig
   }

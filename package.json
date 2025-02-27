@@ -1,6 +1,6 @@
 {
   "name": "react-bmapgl",
-  "version": "0.2.27",
+  "version": "1.0.0",
   "description": "基于百度地图JavaScript GL版API封装的React组件库",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,12 +14,12 @@
   "scripts": {
     "start": "styleguidist server",
     "build": "rm -rf dist && tsc --build tsconfig.build.json",
-    "build:doc": "rm -rf styleguide && styleguidist build && npm run replace",
+    "build:doc": "rm -rf styleguide && styleguidist build",
     "prepublishOnly": "npm run build",
     "replace": "node rsg-config/replace.cdn.js",
     "deploy": "gh-pages -d styleguide",
     "deploy:bos": "sh upload.sh",
-    "page": "npm run build:doc && npm run deploy:bos && npm run deploy"
+    "page": "npm run build:doc && npm run deploy"
   },
   "repository": {
     "type": "git",
