@@ -49,6 +49,8 @@ export interface MapProps {
     className?: string;
     /** 地图容器父元素的style样式 */
     style?: CSSProperties;
+    /** 可选子组件 */
+    children?: ReactNode;
 };
 
 const eventsMap: Events = [
