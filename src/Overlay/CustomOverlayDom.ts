@@ -124,7 +124,12 @@ CustomOverlayDom.prototype.initialize = function(map: BMapGL.Map) {
         map.getPanes().floatShadow : 
         map.getPanes().floatPane;
     pane!.appendChild(this._div);
-    
+
+    // 保证此时 DOM 尺寸稳定
+    requestAnimationFrame(() => {
+        this.draw();
+    });
+
     return this._div;
 }
 

@@ -43,6 +43,8 @@ export interface CustomOverlayProps extends MapChildrenProps {
     coordType?: 'bd09ll' | 'bd09mc';
     /** 自动聚焦视野 */
     autoViewport?: boolean;
+    /** 子元素 */
+    children?: React.ReactElement;
 }
 
 /**
@@ -110,7 +112,8 @@ export default class CustomOverlay extends Component<CustomOverlayProps> {
                 'useTranslate',
                 'autoFollowHeadingChanged',
                 'visible',
-                'zIndex'
+                'zIndex',
+                'children'
             ];
 
             const needRecreate = updateKeys.some(key => 
