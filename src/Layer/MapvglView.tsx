@@ -11,6 +11,8 @@ import { Component, MapChildrenProps } from '../common';
 import { MapContext } from '../Map/Map';
 
 interface MapvglViewProps extends MapChildrenProps {
+    /** 子节点 */
+    children?: ReactNode;
     /** 后处理效果数组 */
     effects?: ('bloom' | 'bright' | 'blur')[];
     preserveDrawingBuffer?: boolean;

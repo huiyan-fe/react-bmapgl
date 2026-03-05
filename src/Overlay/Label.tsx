@@ -130,7 +130,8 @@ class Label extends Component<LabelProps> {
         } else if (position instanceof BMapGL.Point) {
             point = position;
         } else {
-            point = new BMapGL.Point(position!.lng, position!.lat);
+            const p = position as { lng: number; lat: number };
+            point = new BMapGL.Point(p.lng, p.lat);
         }
 
         if (isMC) {

@@ -11,6 +11,8 @@ import shallowequal from 'shallowequal';
 import isString from '../utils/isString';
 
 export interface MapProps {
+    /** 子节点 */
+    children?: ReactNode;
     /** 中心点坐标 */
     center: BMapGL.Point | string;
     /** 缩放级别 */

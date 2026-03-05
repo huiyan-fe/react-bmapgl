@@ -29,8 +29,8 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
     return class MapApiLoaderHOC extends Component<MapApiLoaderProps, MapApiLoaderState> {
 
         static displayName = `MapApiLoaderHOC(${getDisplayName(WrappedComponent)})`;
-        private apiTimer: number;
-        private loadedTimer: number;
+        apiTimer: number;
+        loadedTimer: number;
 
         constructor(props: MapApiLoaderProps) {
             super(props);
@@ -41,7 +41,7 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
             this.handleLoaded = this.handleLoaded.bind(this);
         }
 
-        private isLoadReady(): boolean {
+        isLoadReady(): boolean {
             return !!(window.BMapGL && window.BMapGL.Map);
         }
 

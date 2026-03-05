@@ -9,7 +9,7 @@ import * as mapvgl from 'mapvgl';
 // @ts-ignore
 import * as mapvglThree from 'mapvgl/dist/mapvgl.threelayers.min';
 import { Component, MapChildrenProps } from '../common';
-import { MapVGLViewChildrenProps, ViewContext } from './MapvglView';
+import { MapVGLViewChildrenProps, ViewContext, ViewContextProps } from './MapvglView';
 
 interface MapvglLayerProps extends MapChildrenProps, MapVGLViewChildrenProps {
     /** 绘制图层的构造函数名称，注意`区分大小写` */
@@ -93,7 +93,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
 
     initialize() {
         let map = this.map = this.getMap();
-        let view = this.view = this.props.view || this.context.view;
+        let view = this.view = this.props.view || (this.context as ViewContextProps).view;
         if (!map || !view) {
             return;
         }
@@ -144,7 +144,7 @@ export default class MapvglLayer extends Component<MapvglLayerProps> {
         if (mapvgl[this.props.type] || mapvglThree[this.props.type]) {
             this._createLayer = true;
             const Constructor = mapvgl[this.props.type] ? mapvgl : mapvglThree;
-            this.layer = new Constructor[this.props.type](this.props.options);
+            this.layer = new (Constructor as any)[this.props.type](this.props.options) as MapVGL.Layer;
             this.view.addLayer(this.layer);
         } else {
             console.error(`mapvgl doesn't have layer ${this.props.type}!`)

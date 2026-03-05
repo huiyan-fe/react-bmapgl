@@ -86,7 +86,8 @@ export default class Circle extends Graphy<CircleProps> {
         } else if (center instanceof BMapGL.Point) {
             point = center;
         } else {
-            point = new BMapGL.Point(center!.lng, center!.lat);
+            const c = center as { lng: number; lat: number };
+            point = new BMapGL.Point(c.lng, c.lat);
         }
 
         if (isMC) {

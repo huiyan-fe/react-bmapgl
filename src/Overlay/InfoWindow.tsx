@@ -10,6 +10,8 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { MapContext } from '../Map/Map';
 
 export interface InfoWindowProps extends MapChildrenProps {
+    /** 子节点，用于自定义信息窗口内容 */
+    children?: React.ReactNode;
     /** 坐标体系，可选百度经纬度坐标或百度墨卡托坐标 */
     coordType?: 'bd09ll' | 'bd09mc';
     /** 信息窗口的坐标 */
@@ -120,7 +122,8 @@ class InfoWindow extends Component<InfoWindowProps> {
         } else if (position instanceof BMapGL.Point) {
             point = position;
         } else {
-            point = new BMapGL.Point(position!.lng, position!.lat);
+            const p = position as { lng: number; lat: number };
+            point = new BMapGL.Point(p.lng, p.lat);
         }
 
         if (isMC) {
