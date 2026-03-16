@@ -46,8 +46,10 @@ class Example extends React.Component {
           title="复杂文本信息窗口"
         >
           <table border="1" width="20">
-            <tr><td>这</td><td>是</td><td>一</td><td>个</td><td>表</td><td>格</td></tr>
-            <tr><td>支</td><td>持</td><td>传</td><td>入</td><td>DOM</td><td>哦</td></tr>
+            <tbody>
+              <tr><td>这</td><td>是</td><td>一</td><td>个</td><td>表</td><td>格</td></tr>
+              <tr><td>支</td><td>持</td><td>传</td><td>入</td><td>DOM</td><td>哦</td></tr>
+            </tbody>
           </table>
         </InfoWindow>
       </Map>
