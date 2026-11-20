@@ -4,12 +4,28 @@
 [![Download](https://img.shields.io/npm/dm/react-bmapgl.svg)](https://www.npmjs.com/package/react-bmapgl)
 [![License](https://img.shields.io/github/license/huiyan-fe/react-bmapgl.svg)](https://github.com/huiyan-fe/react-bmapgl)
 
-基于百度地图JavaScript GL版API封装的React组件库。如果想要使用旧版的2D地图的话，使用[react-bmap](https://github.com/huiyan-fe/react-bmap)。如果您对使用地图API完全陌生，建议使用这个库之前先了解[百度地图JavaScript GL API](http://lbsyun.baidu.com/index.php?title=jspopularGL)，了解一些地图的基本概念，并申请开发者`ak`。
+> **⚠️ 本项目已停止维护**
+>
+> React-BMapGL 不再更新，新项目请直接使用 [React-BMap](https://github.com/huiyan-fe/react-bmap)（npm 包 `@baidumap/react-bmap`）。
+>
+> - 一套代码同时支持 JSAPI 3.0（2D）和 4.0（WebGL），默认使用 WebGL
+> - 组件和 Hook 写法，基于 React 18+
+> - 自动加载地图脚本，无需在 `index.html` 中手动引入 `<script>`
+>
+> 官方文档：https://lbs.baidu.com/jsapi/react/docs/
+>
+> ```bash
+> npm install @baidumap/react-bmap
+> ```
+>
+> 以下文档仅供仍在使用 react-bmapgl 的存量项目参考。
+
+基于百度地图JavaScript GL版API封装的React组件库。如果您对使用地图API完全陌生，建议使用这个库之前先了解[百度地图JavaScript GL API](http://lbsyun.baidu.com/index.php?title=jspopularGL)，了解一些地图的基本概念，并申请开发者`ak`。
 
 <br />
 
 ## 文档示例
-官方地址：https://huiyan-fe.github.io/react-bmapgl/
+旧版文档地址：https://huiyan-fe.github.io/react-bmapgl/（新项目请查看 [React-BMap 文档](https://lbs.baidu.com/jsapi/react/docs/)）
 
 <br />
 
